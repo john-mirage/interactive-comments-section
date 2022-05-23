@@ -1,0 +1,14 @@
+.replies {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+}
+
+.replies__line {
+    flex: 0 0 auto;
+}
+
+.replies__list {
+    flex: 1 1 0;
+}
