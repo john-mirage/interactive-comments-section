@@ -11,7 +11,31 @@
     <title>Interactive Comments Section</title>
   </head>
 
-  <body>
+  <body class="page">
+
+    <!-- App -->
+    <main class="page__container" id="app"></main>
+
+    <!-- Template | comment -->
+    <template id="template-comment">
+      <div class="comment">
+        <div class="comment__info"></div>
+        <p class="comment__value"></p>
+        <div class="comment__button-vote"></div>
+        <div class="comment__button-reply"></div>
+      </div>
+    </template>
+
+    <!-- Template | form -->
+    <template id="template-form">
+      <form class="form">
+        <label class="form__label" for="form-textarea"></label>
+        <textarea class="form__textarea" id="form-textarea"></textarea>
+        <div class="form__avatar"></div>
+        <div class="form__button-submit"></div>
+      </form>
+    </template>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 

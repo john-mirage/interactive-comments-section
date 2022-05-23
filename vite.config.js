@@ -9,6 +9,7 @@ export default defineConfig({
       '@assets': resolve(__dirname, 'src/assets'),
       '@components': resolve(__dirname, 'src/components'),
       '@data': resolve(__dirname, 'src/data'),
+      '@interfaces': resolve(__dirname, 'src/interfaces'),
     },
   },
 });

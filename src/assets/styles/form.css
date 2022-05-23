@@ -1,0 +1,23 @@
+.form {
+    display: grid;
+    grid-template-areas: "textarea textarea"
+                         "avatar   button-submit";
+}
+
+.form__textarea {
+    grid-area: textarea;
+}
+
+.form__avatar {
+    grid-area: avatar;
+}
+
+.form__button-submit {
+    grid-area: button-submit;
+}
+
+@media screen and (min-width: 764px){
+    .form {
+        grid-template-areas: "avatar textarea button-submit";
+    }
+}

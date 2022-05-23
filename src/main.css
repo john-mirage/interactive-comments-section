@@ -1,3 +1,10 @@
+@import "assets/styles/comment.css";
+@import "assets/styles/form.css";
+@import "assets/styles/avatar.css";
+@import "assets/styles/button-counter.css";
+@import "assets/styles/button-reply.css";
+@import "assets/styles/button-submit.css";
+
 :root {
     --color-moderate-blue: hsl(238, 40%, 52%);
     --color-soft-red: hsl(358, 79%, 66%);
