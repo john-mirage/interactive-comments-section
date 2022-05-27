@@ -16,14 +16,34 @@
     <!-- App -->
     <main class="page__container" id="app"></main>
 
-    <!-- Template | comment -->
-    <template id="template-comment">
-      <div class="comment">
-        <div class="comment__info"></div>
-        <p class="comment__value"></p>
-        <div class="comment__button-vote"></div>
-        <div class="comment__button-reply"></div>
+    <!-- Template | post -->
+    <template id="template-post">
+      <div class="post">
+        <div class="post__card">
+          <div class="post__info">
+            <img class="avatar" src="/src/assets/images/person.svg" alt="Profile picture">
+            <p class="post__username">Username</p>
+            <p class="post__date-of-reply">1 month ago</p>
+          </div>
+          <p class="post__value">Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You’ve nailed the design and the responsiveness at various breakpoints works really well.</p>
+          <div class="post__button-vote">
+            <div class="button-counter">
+              <button class="button-counter__button">
+                <app-icon class="button-counter__icon" icon-width="1.2rem" shape="plus"></app-icon>
+              </button>
+              <p class="button-counter__count">12</p>
+              <button class="button-counter__button">
+                <app-icon class="button-counter__icon" icon-width="1.2rem" shape="minus"></app-icon>
+              </button>
+            </div>
+          </div>
+          <div class="post__actions"></div>
+        </div>
       </div>
+    </template>
+
+    <!-- Template | replies -->
+    <template id="template-replies">
       <div class="replies">
         <div class="replies__line"></div>
         <div class="replies__list"></div>
@@ -38,6 +58,11 @@
         <div class="form__avatar"></div>
         <div class="form__button-submit"></div>
       </form>
+    </template>
+
+    <!-- Template | icon -->
+    <template id="template-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"></svg>
     </template>
 
     <script type="module" src="/src/main.ts"></script>

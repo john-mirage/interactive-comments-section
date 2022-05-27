@@ -1,11 +1,8 @@
 import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
+import AppCommentInterface from "@interfaces/app-comment";
 
-interface AppCommentProps {
-  comment: Comment;
-}
-
-class AppRoot extends HTMLElement {
+class AppSection extends HTMLElement {
   currentUser: User | false;
   comments: Comment[] | false;
 
@@ -19,7 +16,8 @@ class AppRoot extends HTMLElement {
     if (this.currentUser && this.comments) {
       const form = document.createElement("app-form");
       this.comments.forEach((comment) => {
-        const commentElement = document.createElement("app-comment") as HTMLElement & AppCommentProps;
+        const commentElement = <AppCommentInterface>document.createElement("app-comment");
+        commentElement.currentUser = <User>this.currentUser;
         commentElement.comment = comment;
         this.appendChild(commentElement);
       });
@@ -28,4 +26,4 @@ class AppRoot extends HTMLElement {
   }
 }
 
-export default AppRoot;
+export default AppSection;

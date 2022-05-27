@@ -1,0 +1,73 @@
+.post {
+    width: 100%;
+    height: auto;
+}
+
+.post__card {
+    display: grid;
+    grid-template-areas: "info        info"
+                         "comment     comment"
+                         "button-vote actions";
+    padding: 1.6rem;
+    background-color: var(--color-white);
+    border-radius: 0.8rem;
+    margin-bottom: 1.6rem;
+}
+
+.post__info {
+    grid-area: info;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1.6rem;
+}
+
+.post__username {
+    margin-left: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-dark-blue);
+}
+
+.post__date-of-reply {
+    margin-left: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--color-grayish-blue);
+}
+
+.post__value {
+    margin-top: 0;
+    margin-bottom: 1.6rem;
+    grid-area: comment;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 2.4rem;
+    color: var(--color-grayish-blue);
+}
+
+.post__button-vote {
+    grid-area: button-vote;
+}
+
+.post__actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+@media screen and (min-width: 764px) {
+    .post__card {
+        grid-template-areas: "button-vote info    actions"
+                             "button-vote comment comment";
+    }
+}

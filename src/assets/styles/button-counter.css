@@ -1,3 +1,36 @@
 .button-counter {
-    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 10rem;
+    height: 4rem;
+    background-color: var(--color-very-light-gray);
+    border-radius: 0.8rem;
+}
+
+.button-counter__button {
+    flex: 1 1 0;
+    display: flex;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    color: var(--color-light-grayish-blue);
+}
+
+.button-counter__button:hover {
+    color: var(--color-moderate-blue);
+}
+
+.button-counter__icon {
+    display: block;
+    margin: auto;
+}
+
+.button-counter__count {
+    flex: 1 1 0;
+    text-align: center;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-moderate-blue);
 }

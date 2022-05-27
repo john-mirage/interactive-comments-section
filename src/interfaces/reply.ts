@@ -4,6 +4,7 @@ export default interface Reply {
   id: number;
   content: string;
   createdAt: string;
-  score: string;
+  score: number;
+  replyingTo: string;
   user: User;
 }

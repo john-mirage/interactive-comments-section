@@ -3,3 +3,5 @@ class AppReply extends HTMLElement {
     super();
   }
 }
+
+export default AppReply;
