@@ -1,5 +1,6 @@
 import Comment from "@interfaces/comment";
 import User from "@interfaces/user";
+import AppScoreButtonInterface from "@interfaces/app-score-button";
 
 class AppComment extends HTMLElement {
   currentUser: User | false;
@@ -13,35 +14,49 @@ class AppComment extends HTMLElement {
 
   connectedCallback() {
     if (this.currentUser && this.comment) {
-      const template = <HTMLTemplateElement>document.getElementById("template-post");
-      const fragment = <DocumentFragment>template.content.cloneNode(true);
-      const postElement = <HTMLDivElement>fragment.querySelector(".post");
-      const avatarElement = <HTMLImageElement>fragment.querySelector(".avatar");
-      const postUserElement = <HTMLElement>fragment.querySelector(".post__username");
-      const postCreatedAtElement = <HTMLElement>fragment.querySelector(".post__created-at");
-      const postContentElement = <HTMLParagraphElement>fragment.querySelector(".post__content");
-      const postScoreElement = <HTMLDivElement>fragment.querySelector(".post__score");
-      const scoreButton = <HTMLElement>document.createElement("app-score-button");
-      scoreButton.score = this.comment.score;
-      postScoreElement.appendChild(scoreButton);
-      avatarElement.setAttribute("src", this.comment.user.image.png);
-      postUserElement.textContent = this.comment.user.username;
-      postCreatedAtElement.textContent = this.comment.createdAt;
-      postContentElement.textContent = this.comment.content;
-      const actions = <HTMLDivElement>fragment.querySelector(".post__actions");
-      if (this.currentUser.username === this.comment.user.username) {
-        const deleteButton = this.createActionButton("delete", "delete", true);
-        const editButton = this.createActionButton("edit", "edit");
-        actions.append(deleteButton, editButton);
-      } else {
-        const replyButton = this.createActionButton("reply", "reply");
-        actions.appendChild(replyButton);
-      }
-      this.appendChild(postElement);
+      const comment = this.createComment(this.comment);
+      this.appendChild(comment);
       if (this.comment.replies.length > 0) {
-        // Create replies
+        const repliesTemplate = <HTMLTemplateElement>document.getElementById("template-replies");
+        const repliesFragment = <DocumentFragment>repliesTemplate.content.cloneNode(true);
+        const repliesElement = <HTMLDivElement>repliesFragment.querySelector(".replies");
+        const repliesListElement = <HTMLDivElement>repliesFragment.querySelector(".replies__list");
+        this.appendChild(repliesElement);
+        this.comment.replies.forEach((reply) => {
+          const replyElement = this.createComment(reply);
+          const cardElement = replyElement.querySelector(".post__card");
+          repliesListElement.appendChild(cardElement);
+        });
       }
     }
+  }
+
+  createComment(comment: Comment) {
+    const template = <HTMLTemplateElement>document.getElementById("template-post");
+    const fragment = <DocumentFragment>template.content.cloneNode(true);
+    const postElement = <HTMLDivElement>fragment.querySelector(".post");
+    const avatarElement = <HTMLImageElement>fragment.querySelector(".avatar");
+    const postUserElement = <HTMLElement>fragment.querySelector(".post__username");
+    const postCreatedAtElement = <HTMLElement>fragment.querySelector(".post__created-at");
+    const postContentElement = <HTMLParagraphElement>fragment.querySelector(".post__content");
+    const postScoreElement = <HTMLDivElement>fragment.querySelector(".post__score");
+    const scoreButton = <AppScoreButtonInterface>document.createElement("app-score-button");
+    scoreButton.score = comment.score;
+    postScoreElement.appendChild(scoreButton);
+    avatarElement.setAttribute("src", comment.user.image.png);
+    postUserElement.textContent = comment.user.username;
+    postCreatedAtElement.textContent = comment.createdAt;
+    postContentElement.textContent = comment.content;
+    const actions = <HTMLDivElement>fragment.querySelector(".post__actions");
+    if (this.currentUser && this.currentUser.username === comment.user.username) {
+      const deleteButton = this.createActionButton("delete", "delete", true);
+      const editButton = this.createActionButton("edit", "edit");
+      actions.append(deleteButton, editButton);
+    } else {
+      const replyButton = this.createActionButton("reply", "reply");
+      actions.appendChild(replyButton);
+    }
+    return postElement;
   }
 
   createActionButton(label: string, shape: string, danger = false) {

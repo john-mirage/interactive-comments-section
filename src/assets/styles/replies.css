@@ -3,10 +3,21 @@
     flex-direction: row;
     width: 100%;
     height: auto;
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+}
+
+.replies__timeline {
+    flex: 0 0 auto;
+    width: 8.8rem;
 }
 
 .replies__line {
-    flex: 0 0 auto;
+    width: 0.2rem;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--color-light-gray);
 }
 
 .replies__list {
