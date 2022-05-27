@@ -32,7 +32,7 @@
     color: var(--color-dark-blue);
 }
 
-.post__date-of-reply {
+.post__created-at {
     margin-left: 1.6rem;
     margin-top: 0;
     margin-bottom: 0;
@@ -42,7 +42,7 @@
     color: var(--color-grayish-blue);
 }
 
-.post__value {
+.post__content {
     margin-top: 0;
     margin-bottom: 1.6rem;
     grid-area: comment;

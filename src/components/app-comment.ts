@@ -16,9 +16,17 @@ class AppComment extends HTMLElement {
       const template = <HTMLTemplateElement>document.getElementById("template-post");
       const fragment = <DocumentFragment>template.content.cloneNode(true);
       const postElement = <HTMLDivElement>fragment.querySelector(".post");
+      const avatarElement = <HTMLImageElement>fragment.querySelector(".avatar");
+      const postUserElement = <HTMLElement>fragment.querySelector(".post__username");
+      const postCreatedAtElement = <HTMLElement>fragment.querySelector(".post__created-at");
+      const postContentElement = <HTMLParagraphElement>fragment.querySelector(".post__content");
+      avatarElement.setAttribute("src", this.comment.user.image.png);
+      postUserElement.textContent = this.comment.user.username;
+      postCreatedAtElement.textContent = this.comment.createdAt;
+      postContentElement.textContent = this.comment.content;
       const actions = <HTMLDivElement>fragment.querySelector(".post__actions");
-      if ("amyrobson" === this.comment.user.username) {
-        const deleteButton = this.createActionButton("delete", "delete");
+      if (this.currentUser.username === this.comment.user.username) {
+        const deleteButton = this.createActionButton("delete", "delete", true);
         const editButton = this.createActionButton("edit", "edit");
         actions.append(deleteButton, editButton);
       } else {
@@ -32,11 +40,15 @@ class AppComment extends HTMLElement {
     }
   }
 
-  createActionButton(label: string, shape: string) {
+  createActionButton(label: string, shape: string, danger = false) {
     const buttonElement = <HTMLButtonElement>document.createElement("button");
     const iconElement = <HTMLElement>document.createElement("app-icon");
     const labelElement = <HTMLLabelElement>document.createElement("label");
-    buttonElement.classList.add("button-action");
+    if (danger) {
+      buttonElement.classList.add("button-action", "button-action--danger");
+    } else {
+      buttonElement.classList.add("button-action");
+    }
     iconElement.classList.add("button-action__icon");
     labelElement.classList.add("button-action__label");
     iconElement.setAttribute("icon-height", "14px");
