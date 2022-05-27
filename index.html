@@ -26,19 +26,22 @@
             <p class="post__created-at"></p>
           </div>
           <p class="post__content"></p>
-          <div class="post__button-vote">
-            <div class="button-counter">
-              <button class="button-counter__button">
-                <app-icon class="button-counter__icon" icon-width="1.2rem" shape="plus"></app-icon>
-              </button>
-              <p class="button-counter__count">12</p>
-              <button class="button-counter__button">
-                <app-icon class="button-counter__icon" icon-width="1.2rem" shape="minus"></app-icon>
-              </button>
-            </div>
-          </div>
+          <div class="post__score"></div>
           <div class="post__actions"></div>
         </div>
+      </div>
+    </template>
+
+    <!-- Template | score button -->
+    <template id="template-score-button">
+      <div class="button-counter">
+        <button class="button-counter__button button-counter__button--plus">
+          <app-icon class="button-counter__icon" icon-width="1.2rem" shape="plus"></app-icon>
+        </button>
+        <p class="button-counter__count"></p>
+        <button class="button-counter__button button-counter__button--minus">
+          <app-icon class="button-counter__icon" icon-width="1.2rem" shape="minus"></app-icon>
+        </button>
       </div>
     </template>
 
@@ -54,9 +57,13 @@
     <template id="template-form">
       <form class="form">
         <label class="form__label" for="form-textarea"></label>
-        <textarea class="form__textarea" id="form-textarea"></textarea>
-        <div class="form__avatar"></div>
-        <div class="form__button-submit"></div>
+        <textarea class="form__textarea" placeholder="Add a comment..." id="form-textarea"></textarea>
+        <div class="form__avatar">
+          <img class="avatar" src="/src/assets/images/person.svg" alt="Profile picture">
+        </div>
+        <div class="form__submit-button">
+          <button class="button-submit" type="button">send</button>
+        </div>
       </form>
     </template>
 

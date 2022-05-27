@@ -12,3 +12,11 @@
     height: auto;
     margin: auto;
 }
+
+@media screen and (min-width: 762px) {
+    .page__container {
+        max-width: 73rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

@@ -20,6 +20,10 @@ class AppComment extends HTMLElement {
       const postUserElement = <HTMLElement>fragment.querySelector(".post__username");
       const postCreatedAtElement = <HTMLElement>fragment.querySelector(".post__created-at");
       const postContentElement = <HTMLParagraphElement>fragment.querySelector(".post__content");
+      const postScoreElement = <HTMLDivElement>fragment.querySelector(".post__score");
+      const scoreButton = <HTMLElement>document.createElement("app-score-button");
+      scoreButton.score = this.comment.score;
+      postScoreElement.appendChild(scoreButton);
       avatarElement.setAttribute("src", this.comment.user.image.png);
       postUserElement.textContent = this.comment.user.username;
       postCreatedAtElement.textContent = this.comment.createdAt;

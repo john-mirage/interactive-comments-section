@@ -15,6 +15,7 @@
     border: none;
     background-color: transparent;
     color: var(--color-light-grayish-blue);
+    cursor: pointer;
 }
 
 .button-counter__button:hover {
@@ -28,9 +29,21 @@
 
 .button-counter__count {
     flex: 1 1 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
     font-family: var(--font);
     font-size: 1.6rem;
     font-weight: 500;
     color: var(--color-moderate-blue);
+}
+
+@media screen and (min-width: 762px) {
+    .button-counter {
+        flex-direction: column;
+        width: 4rem;
+        height: 10rem;
+    }
 }
