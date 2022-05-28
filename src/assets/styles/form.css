@@ -81,7 +81,7 @@
         align-items: flex-start;
     }
 
-    .form__textarea:focus {
+    .form__input:focus {
         outline: 0.2rem solid var(--color-moderate-blue);
     }
 }

@@ -3,35 +3,48 @@ import Comment from "@interfaces/comment";
 import Reply from "@interfaces/reply";
 import User from "@interfaces/user";
 
-class AppPost extends HTMLElement {
+class AppPost extends HTMLDivElement {
+  hasRow: boolean;
+
   constructor() {
     super();
+    this.hasRow = false;
   }
 
   connectedCallback() {
-    const template = <HTMLTemplateElement>document.getElementById("template-post");
-    const fragment = <DocumentFragment>template.content.cloneNode(true);
-    const element = <HTMLDivElement>fragment.querySelector(".post");
-    this.appendChild(element);
+    const postComment = <HTMLDivElement>document.createElement("div");
+    postComment.classList.add("post__comment");
+    this.classList.add("post");
+    this.appendChild(postComment);
   }
 
   loadComment(user: User, comment: Comment) {
     const postComment = <HTMLDivElement>this.querySelector(".post__comment");
-    const appComment = <AppCommentInterface>document.createElement("app-comment");
+    const appComment = <AppCommentInterface>document.createElement("div", { is: "app-comment" });
     postComment.appendChild(appComment);
   }
 
   loadReplies(user: User, replies: Reply[]) {
     if (replies.length > 0) {
-      const postReplies = <HTMLDivElement>this.querySelector(".post__replies");
+      const postRow = this.createPostRow();
+      const postReplies = <HTMLDivElement>postRow.querySelector(".post__replies");
       replies.forEach((reply) => {
-        const appReply = <AppCommentInterface>document.createElement("app-comment");
-        postReplies.appendChild(appReply);
+        const postReply = <HTMLDivElement>document.createElement("div");
+        const replyElement = <AppCommentInterface>document.createElement("div", { is: "app-comment" });
+        postReply.classList.add("post__reply");
+        postReply.appendChild(replyElement);
+        postReplies.appendChild(postReply);
       });
-    } else {
-      const postRow = <HTMLDivElement>this.querySelector(".post__row");
-      postRow.remove();
     }
+  }
+
+  createPostRow() {
+    const template = <HTMLTemplateElement>document.getElementById("template-post-row");
+    const fragment = <DocumentFragment>template.content.cloneNode(true);
+    const postRow = <HTMLDivElement>fragment.querySelector(".post__row");
+    this.appendChild(postRow);
+    if (!this.hasRow) this.hasRow = true;
+    return postRow;
   }
 }
 

@@ -19,7 +19,7 @@ class AppRoot extends HTMLElement {
   loadPosts(user: User, comments: Comment[]) {
     const appPosts = <HTMLDivElement>this.querySelector(".app__posts");
     comments.forEach((comment) => {
-      const appPost = <AppPostInterface>document.createElement("app-post");
+      const appPost = <AppPostInterface>document.createElement("div", { is: "app-post" });
       appPosts.appendChild(appPost);
       appPost.loadComment(user, comment);
       appPost.loadReplies(user, comment.replies);

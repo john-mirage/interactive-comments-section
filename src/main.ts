@@ -9,8 +9,8 @@ import AppScore from "@components/app-score";
 import AppRootInterface from "@interfaces/app-root";
 
 customElements.define("app-root", AppRoot, { extends: "main" });
-customElements.define("app-post", AppPost);
-customElements.define("app-comment", AppComment);
+customElements.define("app-post", AppPost, { extends: "div" });
+customElements.define("app-comment", AppComment, { extends: "div" });
 customElements.define("app-form", AppForm, { extends: "form" });
 customElements.define("app-icon", AppIcon);
 customElements.define("app-score-button", AppScore);

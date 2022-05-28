@@ -1,10 +1,10 @@
-class AppComment extends HTMLElement {
+class AppComment extends HTMLDivElement {
   constructor() {
     super();
   }
 
   connectedCallback() {
-
+    this.classList.add("comment");
   }
 }
 
