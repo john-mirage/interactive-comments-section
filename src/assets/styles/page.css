@@ -6,17 +6,3 @@
     margin: 0;
     background-color: var(--color-very-light-gray);
 }
-
-.page__container {
-    width: 100%;
-    height: auto;
-    margin: auto;
-}
-
-@media screen and (min-width: 762px) {
-    .page__container {
-        max-width: 73rem;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}

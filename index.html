@@ -13,14 +13,11 @@
 
   <body class="page">
 
-    <!-- App -->
-    <main class="page__container" id="app"></main>
-
     <!-- Template | post -->
     <template id="template-post">
       <div class="post">
-        <div class="post__section post__section--comment"></div>
-        <div class="post__section post__section--replies">
+        <div class="post__comment"></div>
+        <div class="post__row">
           <div class="post__timeline"><span class="post__line"></span></div>
           <div class="post__replies"></div>
         </div>
@@ -43,16 +40,14 @@
 
     <!-- Template | form -->
     <template id="template-form">
-      <form class="form">
-        <label class="form__label" for="form-textarea"></label>
-        <textarea class="form__input" placeholder="Add a comment..." id="form-textarea"></textarea>
-        <div class="form__avatar">
-          <img class="avatar avatar--form" src="/src/assets/images/person.svg" alt="Profile picture">
-        </div>
-        <div class="form__action">
-          <button class="form__button" type="button">send</button>
-        </div>
-      </form>
+      <label class="form__label" for="form-textarea"></label>
+      <textarea class="form__input" placeholder="Add a comment..." id="form-textarea"></textarea>
+      <div class="form__avatar">
+        <img class="avatar avatar--form" src="/src/assets/images/person.svg" alt="Profile picture">
+      </div>
+      <div class="form__action">
+        <button class="form__button" type="button">send</button>
+      </div>
     </template>
 
     <!-- Template | score -->

@@ -1,13 +1,12 @@
-class AppForm extends HTMLElement {
+class AppForm extends HTMLFormElement {
   constructor() {
     super();
   }
 
   connectedCallback() {
-    const template = document.getElementById("template-form") as HTMLTemplateElement;
-    const fragment = template.content.cloneNode(true) as DocumentFragment;
-    const formElement = fragment.querySelector(".form");
-    this.appendChild(formElement);
+    const template = <HTMLTemplateElement>document.getElementById("template-form");
+    const fragment = <DocumentFragment>template.content.cloneNode(true);
+    this.appendChild(fragment);
   }
 }
 

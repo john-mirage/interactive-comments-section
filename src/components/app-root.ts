@@ -1,28 +1,29 @@
 import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
-import AppCommentInterface from "@interfaces/app-comment";
+import AppPostInterface from "@interfaces/app-post";
 
 class AppRoot extends HTMLElement {
-  currentUser: User | false;
-  comments: Comment[] | false;
-
   constructor() {
     super();
-    this.currentUser = false;
-    this.comments = false;
   }
 
   connectedCallback() {
-    if (this.currentUser && this.comments) {
-      const form = document.createElement("app-form");
-      this.comments.forEach((comment) => {
-        const commentElement = <AppCommentInterface>document.createElement("app-comment");
-        commentElement.currentUser = <User>this.currentUser;
-        commentElement.comment = comment;
-        this.appendChild(commentElement);
-      });
-      this.appendChild(form);
-    }
+    const posts = <HTMLDivElement>document.createElement("div");
+    const form = document.createElement("form", { is: "app-form" });
+    posts.classList.add("app__posts");
+    form.classList.add("form");
+    this.classList.add("app");
+    this.append(posts, form);
+  }
+
+  loadPosts(user: User, comments: Comment[]) {
+    const appPosts = <HTMLDivElement>this.querySelector(".app__posts");
+    comments.forEach((comment) => {
+      const appPost = <AppPostInterface>document.createElement("app-post");
+      appPosts.appendChild(appPost);
+      appPost.loadComment(user, comment);
+      appPost.loadReplies(user, comment.replies);
+    });
   }
 }
 

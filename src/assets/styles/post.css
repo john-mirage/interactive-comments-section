@@ -2,15 +2,11 @@
 
 }
 
-.post__section {
+.post__comment {
 
 }
 
-.post__section--comment {
-
-}
-
-.post__section--replies {
+.post__row {
     display: flex;
     flex-direction: row;
     width: 100%;
