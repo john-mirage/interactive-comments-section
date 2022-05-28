@@ -3,7 +3,9 @@
 }
 
 .post__comment {
-
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.6rem;
 }
 
 .post__row {
@@ -21,6 +23,7 @@
 }
 
 .post__line {
+    display: block;
     width: 0.2rem;
     height: 100%;
     margin-left: auto;
@@ -30,4 +33,12 @@
 
 .post__replies {
     flex: 1 1 0;
+}
+
+.post__reply {
+    margin-bottom: 1.6rem;
+}
+
+.post__reply:last-child {
+    margin-bottom: 0;
 }

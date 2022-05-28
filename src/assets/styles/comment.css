@@ -4,7 +4,7 @@
     margin-bottom: 1.6rem;
 }
 
-.comment__card {
+.comment {
     display: grid;
     grid-template-areas: "info        info"
                          "comment     comment"
@@ -16,7 +16,7 @@
     border-radius: 0.8rem;
 }
 
-.comment__card:last-child {
+.comment:last-child {
     margin-bottom: 0;
 }
 
@@ -71,7 +71,7 @@
 }
 
 @media screen and (min-width: 762px) {
-    .comment__card {
+    .comment {
         grid-template-areas: "button-vote info    actions"
                              "button-vote comment comment";
         padding: 2.4rem;

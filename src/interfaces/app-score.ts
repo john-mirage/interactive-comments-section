@@ -1,3 +1,3 @@
-export default interface AppScoreInterface extends HTMLElement {
-  score: number;
+export default interface AppScoreInterface extends HTMLDivElement {
+  loadScore: (score: number) => void;
 }

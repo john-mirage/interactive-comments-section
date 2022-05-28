@@ -1,7 +1,7 @@
 import AppCommentInterface from "@interfaces/app-comment";
 import Comment from "@interfaces/comment";
-import Reply from "@interfaces/reply";
 import User from "@interfaces/user";
+import Reply from "@interfaces/reply";
 
 class AppPost extends HTMLDivElement {
   hasRow: boolean;
@@ -22,6 +22,7 @@ class AppPost extends HTMLDivElement {
     const postComment = <HTMLDivElement>this.querySelector(".post__comment");
     const appComment = <AppCommentInterface>document.createElement("div", { is: "app-comment" });
     postComment.appendChild(appComment);
+    appComment.loadComment(user, comment);
   }
 
   loadReplies(user: User, replies: Reply[]) {
@@ -34,6 +35,7 @@ class AppPost extends HTMLDivElement {
         postReply.classList.add("post__reply");
         postReply.appendChild(replyElement);
         postReplies.appendChild(postReply);
+        replyElement.loadComment(user, reply);
       });
     }
   }
@@ -43,7 +45,7 @@ class AppPost extends HTMLDivElement {
     const fragment = <DocumentFragment>template.content.cloneNode(true);
     const postRow = <HTMLDivElement>fragment.querySelector(".post__row");
     this.appendChild(postRow);
-    if (!this.hasRow) this.hasRow = true;
+    this.hasRow = true;
     return postRow;
   }
 }

@@ -13,7 +13,7 @@ customElements.define("app-post", AppPost, { extends: "div" });
 customElements.define("app-comment", AppComment, { extends: "div" });
 customElements.define("app-form", AppForm, { extends: "form" });
 customElements.define("app-icon", AppIcon);
-customElements.define("app-score-button", AppScore);
+customElements.define("app-score", AppScore, { extends: "div" });
 
 const appRoot = <AppRootInterface>document.createElement("main", { is: "app-root" });
 const appComment = document.createComment(" App ");
