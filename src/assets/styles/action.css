@@ -1,4 +1,4 @@
-.button-action {
+.action {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -12,23 +12,23 @@
     cursor: pointer;
 }
 
-.button-action:hover {
+.action:hover {
     opacity: 0.7;
 }
 
-.button-action:last-child {
+.action:last-child {
     margin-right: 0;
 }
 
-.button-action--danger {
+.action--danger {
     color: var(--color-soft-red);
 }
 
-.button-action__icon {
+.action__icon {
 
 }
 
-.button-action__label {
+.action__label {
     margin-left: 0.8rem;
     font-family: var(--font);
     font-size: 1.6rem;

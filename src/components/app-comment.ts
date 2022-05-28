@@ -1,6 +1,6 @@
 import Comment from "@interfaces/comment";
 import User from "@interfaces/user";
-import AppScoreButtonInterface from "@interfaces/app-score-button";
+import AppScoreInterface from "@interfaces/app-score";
 
 class AppComment extends HTMLElement {
   currentUser: User | false;
@@ -40,7 +40,7 @@ class AppComment extends HTMLElement {
     const postCreatedAtElement = <HTMLElement>fragment.querySelector(".post__created-at");
     const postContentElement = <HTMLParagraphElement>fragment.querySelector(".post__content");
     const postScoreElement = <HTMLDivElement>fragment.querySelector(".post__score");
-    const scoreButton = <AppScoreButtonInterface>document.createElement("app-score-button");
+    const scoreButton = <AppScoreInterface>document.createElement("app-score-button");
     scoreButton.score = comment.score;
     postScoreElement.appendChild(scoreButton);
     avatarElement.setAttribute("src", comment.user.image.png);

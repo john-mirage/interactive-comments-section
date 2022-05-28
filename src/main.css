@@ -1,11 +1,10 @@
 @import "assets/styles/page.css";
 @import "assets/styles/post.css";
-@import "assets/styles/replies.css";
+@import "assets/styles/comment.css";
 @import "assets/styles/form.css";
 @import "assets/styles/avatar.css";
-@import "assets/styles/button-counter.css";
-@import "assets/styles/button-action.css";
-@import "assets/styles/button-submit.css";
+@import "assets/styles/score.css";
+@import "assets/styles/action.css";
 
 :root {
     --color-moderate-blue: hsl(238, 40%, 52%);

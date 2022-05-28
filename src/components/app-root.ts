@@ -2,7 +2,7 @@ import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
 import AppCommentInterface from "@interfaces/app-comment";
 
-class AppSection extends HTMLElement {
+class AppRoot extends HTMLElement {
   currentUser: User | false;
   comments: Comment[] | false;
 
@@ -26,4 +26,4 @@ class AppSection extends HTMLElement {
   }
 }
 
-export default AppSection;
+export default AppRoot;

@@ -1,80 +1,37 @@
 .post {
+
+}
+
+.post__section {
+
+}
+
+.post__section--comment {
+
+}
+
+.post__section--replies {
+    display: flex;
+    flex-direction: row;
     width: 100%;
     height: auto;
+    margin-top: 1.6rem;
     margin-bottom: 1.6rem;
 }
 
-.post__card {
-    display: grid;
-    grid-template-areas: "info        info"
-                         "comment     comment"
-                         "button-vote actions";
-    gap: 1.6rem 2.4rem;
-    padding: 1.6rem;
-    margin-bottom: 1.6rem;
-    background-color: var(--color-white);
-    border-radius: 0.8rem;
+.post__timeline {
+    flex: 0 0 auto;
+    width: 8.8rem;
 }
 
-.post__card:last-child {
-    margin-bottom: 0;
+.post__line {
+    width: 0.2rem;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--color-light-gray);
 }
 
-.post__info {
-    grid-area: info;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.post__username {
-    margin-left: 1.6rem;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-family: var(--font);
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: var(--color-dark-blue);
-}
-
-.post__created-at {
-    margin-left: 1.6rem;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-family: var(--font);
-    font-size: 1.6rem;
-    font-weight: 400;
-    color: var(--color-grayish-blue);
-}
-
-.post__content {
-    margin-top: 0;
-    margin-bottom: 0;
-    grid-area: comment;
-    font-family: var(--font);
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 2.4rem;
-    color: var(--color-grayish-blue);
-}
-
-.post__score {
-    grid-area: button-vote;
-}
-
-.post__actions {
-    grid-area: actions;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-@media screen and (min-width: 762px) {
-    .post__card {
-        grid-template-areas: "button-vote info    actions"
-                             "button-vote comment comment";
-        padding: 2.4rem;
-        gap: 1.6rem 2.4rem;
-    }
+.post__replies {
+    flex: 1 1 0;
 }

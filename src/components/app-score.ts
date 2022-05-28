@@ -1,4 +1,4 @@
-class AppScoreButton extends HTMLElement {
+class AppScore extends HTMLElement {
   score: number;
 
   constructor() {
@@ -26,4 +26,4 @@ class AppScoreButton extends HTMLElement {
   }
 }
 
-export default AppScoreButton;
+export default AppScore;

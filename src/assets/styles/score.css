@@ -1,4 +1,4 @@
-.button-counter {
+.score {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -8,7 +8,7 @@
     border-radius: 0.8rem;
 }
 
-.button-counter__button {
+.score__button {
     flex: 1 1 0;
     display: flex;
     height: 100%;
@@ -18,16 +18,16 @@
     cursor: pointer;
 }
 
-.button-counter__button:hover {
+.score__button:hover {
     color: var(--color-moderate-blue);
 }
 
-.button-counter__icon {
+.score__icon {
     display: block;
     margin: auto;
 }
 
-.button-counter__count {
+.score__count {
     flex: 1 1 0;
     display: flex;
     justify-content: center;
@@ -41,7 +41,7 @@
 }
 
 @media screen and (min-width: 762px) {
-    .button-counter {
+    .score {
         flex-direction: column;
         width: 4rem;
         height: 10rem;

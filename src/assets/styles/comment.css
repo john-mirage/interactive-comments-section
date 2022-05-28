@@ -1,0 +1,80 @@
+.comment {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.6rem;
+}
+
+.comment__card {
+    display: grid;
+    grid-template-areas: "info        info"
+                         "comment     comment"
+                         "button-vote actions";
+    gap: 1.6rem 2.4rem;
+    padding: 1.6rem;
+    margin-bottom: 1.6rem;
+    background-color: var(--color-white);
+    border-radius: 0.8rem;
+}
+
+.comment__card:last-child {
+    margin-bottom: 0;
+}
+
+.comment__info {
+    grid-area: info;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comment__username {
+    margin-left: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-dark-blue);
+}
+
+.comment__created-at {
+    margin-left: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--color-grayish-blue);
+}
+
+.comment__content {
+    margin-top: 0;
+    margin-bottom: 0;
+    grid-area: comment;
+    font-family: var(--font);
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 2.4rem;
+    color: var(--color-grayish-blue);
+}
+
+.comment__score {
+    grid-area: button-vote;
+}
+
+.comment__actions {
+    grid-area: actions;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+@media screen and (min-width: 762px) {
+    .comment__card {
+        grid-template-areas: "button-vote info    actions"
+                             "button-vote comment comment";
+        padding: 2.4rem;
+        gap: 1.6rem 2.4rem;
+    }
+}

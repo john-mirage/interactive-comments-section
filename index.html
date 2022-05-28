@@ -19,39 +19,25 @@
     <!-- Template | post -->
     <template id="template-post">
       <div class="post">
-        <div class="post__card">
-          <div class="post__info">
-            <img class="avatar" src="/src/assets/images/person.svg" alt="Profile picture">
-            <p class="post__username"></p>
-            <p class="post__created-at"></p>
-          </div>
-          <p class="post__content"></p>
-          <div class="post__score"></div>
-          <div class="post__actions"></div>
+        <div class="post__section post__section--comment"></div>
+        <div class="post__section post__section--replies">
+          <div class="post__timeline"><span class="post__line"></span></div>
+          <div class="post__replies"></div>
         </div>
       </div>
     </template>
 
-    <!-- Template | score button -->
-    <template id="template-score-button">
-      <div class="button-counter">
-        <button class="button-counter__button button-counter__button--plus">
-          <app-icon class="button-counter__icon" icon-width="1.2rem" shape="plus"></app-icon>
-        </button>
-        <p class="button-counter__count"></p>
-        <button class="button-counter__button button-counter__button--minus">
-          <app-icon class="button-counter__icon" icon-width="1.2rem" shape="minus"></app-icon>
-        </button>
-      </div>
-    </template>
-
-    <!-- Template | replies -->
-    <template id="template-replies">
-      <div class="replies">
-        <div class="replies__timeline">
-          <div class="replies__line"></div>
+    <!-- Template | comment -->
+    <template id="template-comment">
+      <div class="comment">
+        <div class="comment__info">
+          <img class="avatar" src="/src/assets/images/person.svg" alt="Profile picture">
+          <p class="comment__username"></p>
+          <p class="comment__created-at"></p>
         </div>
-        <div class="replies__list"></div>
+        <p class="comment__content"></p>
+        <div class="comment__score"></div>
+        <div class="comment__actions"></div>
       </div>
     </template>
 
@@ -59,14 +45,27 @@
     <template id="template-form">
       <form class="form">
         <label class="form__label" for="form-textarea"></label>
-        <textarea class="form__textarea" placeholder="Add a comment..." id="form-textarea"></textarea>
+        <textarea class="form__input" placeholder="Add a comment..." id="form-textarea"></textarea>
         <div class="form__avatar">
           <img class="avatar avatar--form" src="/src/assets/images/person.svg" alt="Profile picture">
         </div>
-        <div class="form__submit-button">
-          <button class="button-submit" type="button">send</button>
+        <div class="form__action">
+          <button class="form__button" type="button">send</button>
         </div>
       </form>
+    </template>
+
+    <!-- Template | score -->
+    <template id="template-score">
+      <div class="score">
+        <button class="score__button score__button--plus">
+          <app-icon class="score__icon" icon-width="1.2rem" shape="plus"></app-icon>
+        </button>
+        <p class="score__count"></p>
+        <button class="score__button score__button--minus">
+          <app-icon class="score__icon" icon-width="1.2rem" shape="minus"></app-icon>
+        </button>
+      </div>
     </template>
 
     <!-- Template | icon -->
