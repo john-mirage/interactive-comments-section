@@ -9,11 +9,9 @@ class AppRoot extends HTMLElement {
 
   connectedCallback() {
     const posts = <HTMLDivElement>document.createElement("div");
-    const form = document.createElement("form", { is: "app-form" });
     posts.classList.add("app__posts");
-    form.classList.add("form");
     this.classList.add("app");
-    this.append(posts, form);
+    this.appendChild(posts);
   }
 
   loadPosts(user: User, comments: Comment[]) {
@@ -24,6 +22,13 @@ class AppRoot extends HTMLElement {
       appPost.loadComment(user, comment);
       appPost.loadReplies(user, comment.replies);
     });
+  }
+
+  createForm(user: User) {
+    const form = document.createElement("form", { is: "app-form" });
+    form.classList.add("form");
+    this.appendChild(form);
+    form.loadForm(user.image.png, "send");
   }
 }
 

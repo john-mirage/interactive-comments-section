@@ -23,6 +23,12 @@ class AppComment extends HTMLDivElement {
     username.textContent = comment.user.username;
     createdAt.textContent = comment.createdAt;
     content.textContent = comment.content;
+    if (comment.replyingTo) {
+      const replyingTo = document.createElement("span");
+      replyingTo.classList.add("comment__replying-to");
+      replyingTo.textContent = `@${comment.replyingTo} `;
+      content.prepend(replyingTo);
+    }
     this.createScore(comment.score);
     const actions = <HTMLDivElement>this.querySelector(".comment__actions");
     if (user.username === comment.user.username) {

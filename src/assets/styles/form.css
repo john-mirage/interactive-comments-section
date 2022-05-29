@@ -34,6 +34,11 @@
     resize: none;
 }
 
+.form__input:focus {
+    outline: none;
+    border: 0.1rem solid var(--color-dark-blue);
+}
+
 .form__input::placeholder {
     color: var(--color-grayish-blue);
     font-weight: 400;
@@ -79,9 +84,5 @@
 
     .form__avatar {
         align-items: flex-start;
-    }
-
-    .form__input:focus {
-        outline: 0.2rem solid var(--color-moderate-blue);
     }
 }

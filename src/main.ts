@@ -19,3 +19,4 @@ const appRoot = <AppRootInterface>document.createElement("main", { is: "app-root
 const appComment = document.createComment(" App ");
 document.body.prepend(appComment, appRoot);
 appRoot.loadPosts(data.currentUser, data.comments);
+appRoot.createForm(data.currentUser);

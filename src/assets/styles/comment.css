@@ -58,6 +58,11 @@
     color: var(--color-grayish-blue);
 }
 
+.comment__replying-to {
+    font-weight: 500;
+    color: var(--color-moderate-blue);
+}
+
 .comment__score {
     grid-area: button-vote;
 }
