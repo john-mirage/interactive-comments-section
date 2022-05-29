@@ -24,7 +24,8 @@ class AppComment extends HTMLDivElement {
     createdAt.textContent = comment.createdAt;
     content.textContent = comment.content;
     if (comment.replyingTo) {
-      const replyingTo = document.createElement("span");
+      const replyingTo = document.createElement("a");
+      replyingTo.setAttribute("href", "#");
       replyingTo.classList.add("comment__replying-to");
       replyingTo.textContent = `@${comment.replyingTo} `;
       content.prepend(replyingTo);

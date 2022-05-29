@@ -59,8 +59,13 @@
 }
 
 .comment__replying-to {
+    text-decoration: none;
     font-weight: 500;
     color: var(--color-moderate-blue);
+}
+
+.comment__replying-to:hover {
+    text-decoration: underline;
 }
 
 .comment__score {
