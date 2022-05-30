@@ -46,9 +46,13 @@ class AppComment extends HTMLDivElement {
     this.setUsername(fragment.querySelector(".comment__username"));
     this.setCreatedAt(fragment.querySelector(".comment__created-at"));
     this.setContent(fragment.querySelector(".comment__content"));
-    if (this.comment.replyingTo) this.createReplyingTo();
+    if (this.comment.replyingTo) {
+      const commentContent = <HTMLParagraphElement>fragment.querySelector(".comment__content");
+      const replyingTo = this.createReplyingTo();
+      commentContent.prepend(replyingTo);
+    }
     const commentActions = <HTMLDivElement>fragment.querySelector(".comment__actions");
-    if (this.comment.replies && this.comment.replies.length > 0) {
+    if (this.user.username === this.comment.user.username) {
       const deleteButton = this.createActionButton("delete");
       const editButton = this.createActionButton("edit");
       commentActions.append(deleteButton, editButton);

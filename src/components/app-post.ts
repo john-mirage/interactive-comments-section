@@ -39,10 +39,18 @@ class AppPost extends HTMLDivElement {
   connectedCallback() {
     this.classList.add("post");
     const postCommentSection = this.createPostCommentSection();
-    const postReplySection = this.createPostReplySection();
-    const comment = this.createComment();
+    const comment = this.createComment(this.comment);
     postCommentSection.appendChild(comment);
-    this.append(postCommentSection, postReplySection);
+    this.append(postCommentSection);
+    if (this.comment.replies && this.comment.replies.length > 0) {
+      const postReplySection = this.createPostReplySection();
+      const postReplies = <HTMLDivElement>postReplySection.querySelector(".post__replies");
+      this.comment.replies.forEach((reply) => {
+        const replyComment = this.createComment(reply);
+        postReplies.append(replyComment);
+      });
+      this.append(postReplySection);
+    }
   }
 
   createPostCommentSection() {
@@ -65,11 +73,11 @@ class AppPost extends HTMLDivElement {
     return postReplySection;
   }
 
-  createComment() {
-    const comment = <AppCommentInterface>document.createElement("div", { is: "app-comment" });
-    comment.user = this.user;
-    comment.comment = this.comment;
-    return comment;
+  createComment(comment: Comment) {
+    const commentElement = <AppCommentInterface>document.createElement("div", { is: "app-comment" });
+    commentElement.user = this.user;
+    commentElement.comment = comment;
+    return commentElement;
   }
 }
 
