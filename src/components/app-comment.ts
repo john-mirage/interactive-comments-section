@@ -67,13 +67,13 @@ class AppComment extends HTMLDivElement {
 
   setAvatar(element: HTMLImageElement | null) {
     if (element) {
-      element.setAttribute("src", this.user.image.png);
+      element.setAttribute("src", this.comment.user.image.png);
     }
   }
 
   setUsername(element: HTMLParagraphElement | null) {
     if (element) {
-      element.textContent = this.user.username;
+      element.textContent = this.comment.user.username;
     }
   }
 
