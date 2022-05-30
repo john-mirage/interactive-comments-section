@@ -46,6 +46,16 @@ class AppComment extends HTMLDivElement {
     this.setUsername(fragment.querySelector(".comment__username"));
     this.setCreatedAt(fragment.querySelector(".comment__created-at"));
     this.setContent(fragment.querySelector(".comment__content"));
+    if (this.comment.replyingTo) this.createReplyingTo();
+    const commentActions = <HTMLDivElement>fragment.querySelector(".comment__actions");
+    if (this.comment.replies && this.comment.replies.length > 0) {
+      const deleteButton = this.createActionButton("delete");
+      const editButton = this.createActionButton("edit");
+      commentActions.append(deleteButton, editButton);
+    } else {
+      const replyButton = this.createActionButton("reply");
+      commentActions.append(replyButton);
+    }
     const score = this.createScore();
     commentScore.appendChild(score);
     this.appendChild(fragment);
@@ -81,21 +91,19 @@ class AppComment extends HTMLDivElement {
     return score;
   }
 
-  createReplyingTo(username: string) {
-    const contentElement = <HTMLParagraphElement>this.querySelector(".comment__content");
-    const replyingToElement = document.createElement("a");
-    replyingToElement.setAttribute("href", "#");
-    replyingToElement.classList.add("comment__replying-to");
-    replyingToElement.textContent = `@${username} `;
-    contentElement.prepend(replyingToElement);
+  createReplyingTo() {
+    const replyingTo = document.createElement("a");
+    replyingTo.setAttribute("href", "#");
+    replyingTo.classList.add("comment__replying-to");
+    replyingTo.textContent = `@${this.comment.replyingTo} `;
+    return replyingTo;
   }
 
-  createAction(name: string) {
-    const actions = <HTMLDivElement>this.querySelector(".comment__actions");
-    const buttonElement = <AppButtonInterface>document.createElement("button", { is: "app-button" });
-    buttonElement.icon = name;
-    buttonElement.label = name;
-    actions.appendChild(buttonElement);
+  createActionButton(name: string) {
+    const button = <AppButtonInterface>document.createElement("button", { is: "app-button" });
+    button.icon = name;
+    button.label = name;
+    return button;
   }
 }
 

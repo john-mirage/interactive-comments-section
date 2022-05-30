@@ -5,7 +5,7 @@
 @import "assets/styles/form.css";
 @import "assets/styles/avatar.css";
 @import "assets/styles/score.css";
-@import "assets/styles/action.css";
+@import "assets/styles/button.css";
 
 :root {
     --color-moderate-blue: hsl(238, 40%, 52%);

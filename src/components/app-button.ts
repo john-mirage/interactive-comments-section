@@ -16,29 +16,64 @@ const icon: Icon = {
 }
 
 class AppButton extends HTMLButtonElement {
+  _icon: string | false;
+  _label: string | false;
+
   constructor() {
     super();
+    this._icon = false;
+    this._label = false;
   }
 
-  connectedCallback() {
-    const buttonElement = document.createElement("button");
-    buttonElement.classList.add("button");
+  get icon() {
+    if (this._icon) {
+      return this._icon;
+    } else {
+      throw new Error("The icon is not defined");
+    }
   }
 
-  set icon(shape: string) {
-    const iconElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    iconElement.classList.add("button__icon");
-    iconElement.setAttribute("viewBox", icon[shape].viewBox);
-    iconElement.setAttribute("fill", "currentColor");
-    iconElement.innerHTML = icon[shape].path;
-    this.prepend(iconElement);
+  get label() {
+    if (this._label) {
+      return this._label;
+    } else {
+      throw new Error("The label is not defined");
+    }
+  }
+
+  set icon(icon: string) {
+    this._icon = icon;
   }
 
   set label(label: string) {
-    const labelElement = document.createElement("span");
-    labelElement.classList.add("button__label");
-    labelElement.textContent = label;
-    this.appendChild(labelElement);
+    this._label = label;
+  }
+
+  connectedCallback() {
+    if (this.label === "delete") {
+      this.classList.add("button", "button--delete");
+    } else {
+      this.classList.add("button");
+    }
+    const icon = this.createIcon();
+    const label = this.createLabel();
+    this.append(icon, label);
+  }
+
+  createIcon() {
+    const iconElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    iconElement.classList.add("button__icon");
+    iconElement.setAttribute("viewBox", icon[this.icon].viewBox);
+    iconElement.setAttribute("fill", "currentColor");
+    iconElement.innerHTML = icon[this.icon].path;
+    return iconElement;
+  }
+
+  createLabel() {
+    const label = document.createElement("span");
+    label.classList.add("button__label");
+    label.textContent = this.label;
+    return label;
   }
 }
 
