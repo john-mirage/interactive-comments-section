@@ -1,7 +1,7 @@
 .form {
     display: grid;
     grid-template-areas: "textarea textarea"
-                         "avatar   action";
+                         "user   action";
     gap: 1.6rem;
     padding: 1.6rem;
     margin-top: 1.6rem;

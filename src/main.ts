@@ -1,6 +1,7 @@
 import "./main.css";
 import data from "@data/data.json";
 import AppRoot from "@components/app-root";
+import AppModal from "@components/app-modal";
 import AppPost from "@components/app-post";
 import AppComment from "@components/app-comment";
 import AppForm from "@components/app-form";
@@ -13,6 +14,7 @@ import AppRootInterface from "@interfaces/app-root";
  * The components do not have to be isolated as they are specific for the project.
  */
 customElements.define("app-root", AppRoot, { extends: "main" });
+customElements.define("app-modal", AppModal, { extends: "div" });
 customElements.define("app-post", AppPost, { extends: "div" });
 customElements.define("app-comment", AppComment, { extends: "div" });
 customElements.define("app-form", AppForm, { extends: "form" });

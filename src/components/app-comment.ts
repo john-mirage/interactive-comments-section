@@ -2,6 +2,7 @@ import AppScoreInterface from "@interfaces/app-score";
 import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
 import AppButtonInterface from "@interfaces/app-button";
+import AppModalInterface from "@interfaces/app-modal";
 
 class AppComment extends HTMLDivElement {
   _user: User | false;
@@ -72,6 +73,10 @@ class AppComment extends HTMLDivElement {
       username.after(owned);
       const deleteButton = this.createActionButton("delete");
       const editButton = this.createActionButton("edit");
+      deleteButton.addEventListener("click", () => {
+        const modal = <AppModalInterface>document.createElement("div", { is: "app-modal" });
+        modal.mount();
+      });
       actions.append(deleteButton, editButton);
     } else {
       const replyButton = this.createActionButton("reply");
