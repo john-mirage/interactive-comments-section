@@ -1,5 +1,4 @@
 import User from "@interfaces/user";
-import Reply from "@interfaces/reply";
 
 export default interface Comment {
   id: number;
@@ -7,5 +6,6 @@ export default interface Comment {
   createdAt: string;
   score: number;
   user: User;
-  replies: Reply[];
+  replyingTo?: string;
+  replies?: Comment[];
 }

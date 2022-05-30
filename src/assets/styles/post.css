@@ -1,20 +1,22 @@
 .post {
-
-}
-
-.post__comment {
     width: 100%;
     height: auto;
+}
+
+.post__section {
+    width: 100%;
+    height: auto;
+}
+
+.post__section--comment {
     margin-bottom: 1.6rem;
 }
 
-.post__row {
+.post__section--reply {
     display: flex;
     flex-direction: row;
     width: 100%;
     height: auto;
-    margin-top: 1.6rem;
-    margin-bottom: 1.6rem;
 }
 
 .post__timeline {
@@ -33,12 +35,4 @@
 
 .post__replies {
     flex: 1 1 0;
-}
-
-.post__reply {
-    margin-bottom: 1.6rem;
-}
-
-.post__reply:last-child {
-    margin-bottom: 0;
 }

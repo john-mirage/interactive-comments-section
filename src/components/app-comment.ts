@@ -1,70 +1,101 @@
-import Comment from "@interfaces/comment";
 import AppScoreInterface from "@interfaces/app-score";
 import User from "@interfaces/user";
+import Comment from "@interfaces/comment";
+import AppButtonInterface from "@interfaces/app-button";
 
 class AppComment extends HTMLDivElement {
+  _user: User | false;
+  _comment: Comment | false;
+
   constructor() {
     super();
+    this._user = false;
+    this._comment = false;
+  }
+
+  get user() {
+    if (this._user) {
+      return this._user;
+    } else {
+      throw new Error("The user is not defined");
+    }
+  }
+
+  get comment() {
+    if (this._comment) {
+      return this._comment;
+    } else {
+      throw new Error("The comment is not defined");
+    }
+  }
+
+  set user(user: User) {
+    this._user = user;
+  }
+
+  set comment(comment: Comment) {
+    this._comment = comment;
   }
 
   connectedCallback() {
+    this.classList.add("comment");
     const template = <HTMLTemplateElement>document.getElementById("template-comment");
     const fragment = <DocumentFragment>template.content.cloneNode(true);
-    this.classList.add("comment");
+    const commentScore = <HTMLDivElement>fragment.querySelector(".comment__score");
+    this.setAvatar(fragment.querySelector(".avatar"));
+    this.setUsername(fragment.querySelector(".comment__username"));
+    this.setCreatedAt(fragment.querySelector(".comment__created-at"));
+    this.setContent(fragment.querySelector(".comment__content"));
+    const score = this.createScore();
+    commentScore.appendChild(score);
     this.appendChild(fragment);
   }
 
-  loadComment(user: User, comment: Comment) {
-    const avatar = <HTMLImageElement>this.querySelector(".avatar");
-    const username = <HTMLParagraphElement>this.querySelector(".comment__username");
-    const createdAt = <HTMLParagraphElement>this.querySelector(".comment__created-at");
-    const content = <HTMLParagraphElement>this.querySelector(".comment__content");
-    avatar.setAttribute("src", comment.user.image.png);
-    username.textContent = comment.user.username;
-    createdAt.textContent = comment.createdAt;
-    content.textContent = comment.content;
-    if (comment.replyingTo) {
-      const replyingTo = document.createElement("a");
-      replyingTo.setAttribute("href", "#");
-      replyingTo.classList.add("comment__replying-to");
-      replyingTo.textContent = `@${comment.replyingTo} `;
-      content.prepend(replyingTo);
+  setAvatar(element: HTMLImageElement | null) {
+    if (element) {
+      element.setAttribute("src", this.user.image.png);
     }
-    this.createScore(comment.score);
+  }
+
+  setUsername(element: HTMLParagraphElement | null) {
+    if (element) {
+      element.textContent = this.user.username;
+    }
+  }
+
+  setCreatedAt(element: HTMLParagraphElement | null) {
+    if (element) {
+      element.textContent = this.comment.createdAt;
+    }
+  }
+
+  setContent(element: HTMLParagraphElement | null) {
+    if (element) {
+      element.textContent = this.comment.content;
+    }
+  }
+
+  createScore() {
+    const score = <AppScoreInterface>document.createElement("div", { is: "app-score" });
+    score.count = this.comment.score;
+    return score;
+  }
+
+  createReplyingTo(username: string) {
+    const contentElement = <HTMLParagraphElement>this.querySelector(".comment__content");
+    const replyingToElement = document.createElement("a");
+    replyingToElement.setAttribute("href", "#");
+    replyingToElement.classList.add("comment__replying-to");
+    replyingToElement.textContent = `@${username} `;
+    contentElement.prepend(replyingToElement);
+  }
+
+  createAction(name: string) {
     const actions = <HTMLDivElement>this.querySelector(".comment__actions");
-    if (user.username === comment.user.username) {
-      const deleteButton = this.createActionButton("delete", "delete", true);
-      const editButton = this.createActionButton("edit", "edit");
-      actions.append(deleteButton, editButton);
-    } else {
-      const replyButton = this.createActionButton("reply", "reply");
-      actions.appendChild(replyButton);
-    }
-  }
-
-  createScore(score: number) {
-    const commentScore = <HTMLDivElement>this.querySelector(".comment__score");
-    const scoreElement = <AppScoreInterface>document.createElement("div", { is: "app-score" });
-    commentScore.appendChild(scoreElement);
-    scoreElement.loadScore(score);
-  }
-
-  createActionButton(label: string, shape: string, danger = false) {
-    const buttonElement = <HTMLButtonElement>document.createElement("button");
-    const iconElement = <HTMLElement>document.createElement("app-icon");
-    const labelElement = <HTMLLabelElement>document.createElement("label");
-    if (danger) {
-      buttonElement.classList.add("action", "action--danger");
-    } else {
-      buttonElement.classList.add("action");
-    }
-    iconElement.classList.add("action__icon");
-    labelElement.classList.add("action__label");
-    iconElement.setAttribute("icon-height", "14px");
-    iconElement.setAttribute("shape", shape);
-    labelElement.textContent = label;
-    buttonElement.append(iconElement, labelElement);
-    return buttonElement;
+    const buttonElement = <AppButtonInterface>document.createElement("button", { is: "app-button" });
+    buttonElement.icon = name;
+    buttonElement.label = name;
+    actions.appendChild(buttonElement);
   }
 }
 
