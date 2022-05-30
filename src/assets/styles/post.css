@@ -1,12 +1,16 @@
 .post {
     width: 100%;
     height: auto;
+    margin-top: 1.6rem;
+}
+
+.post:first-child {
+    margin-top: 0;
 }
 
 .post__section {
     width: 100%;
     height: auto;
-    margin-bottom: 1.6rem;
 }
 
 .post__section--reply {
@@ -14,6 +18,15 @@
     flex-direction: row;
     width: 100%;
     height: auto;
+    margin-top: 1.6rem;
+}
+
+.post__section--reply .comment {
+    margin-top: 1.6rem;
+}
+
+.post__section--reply .comment:first-child {
+    margin-top: 0;
 }
 
 .post__timeline {

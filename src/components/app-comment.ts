@@ -58,21 +58,29 @@ class AppComment extends HTMLDivElement {
     username.textContent = this.comment.user.username;
     createdAt.textContent = this.comment.createdAt;
     content.textContent = this.comment.content;
+    info.append(avatar, username, createdAt);
+    const scoreButton = this.createScore();
+    score.append(scoreButton);
     if (this.comment.replyingTo) {
       const replyingTo = this.createReplyingTo();
       content.prepend(replyingTo);
     }
     if (this.user.username === this.comment.user.username) {
+      const owned = document.createElement("p");
+      owned.classList.add("comment__owned");
+      owned.textContent = "you";
+      username.after(owned);
       const deleteButton = this.createActionButton("delete");
       const editButton = this.createActionButton("edit");
       actions.append(deleteButton, editButton);
     } else {
       const replyButton = this.createActionButton("reply");
+      replyButton.addEventListener("click", () => {
+        this.createReplyForm();
+        replyButton.disable();
+      });
       actions.append(replyButton);
     }
-    const scoreButton = this.createScore();
-    info.append(avatar, username, createdAt);
-    score.append(scoreButton);
     this.append(info, content, score, actions);
   }
 
@@ -95,6 +103,14 @@ class AppComment extends HTMLDivElement {
     button.icon = name;
     button.label = name;
     return button;
+  }
+
+  createReplyForm() {
+    const replyForm = document.createElement("form", { is: "app-form" });
+    replyForm.user = this.user;
+    replyForm.buttonLabel = "reply";
+    replyForm.inputId = `add-reply-form-${String(this.comment.id)}`;
+    this.after(replyForm);
   }
 }
 

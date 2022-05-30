@@ -8,20 +8,27 @@
     padding: 0;
     border: none;
     background-color: transparent;
-    color: var(--color-moderate-blue);
     cursor: pointer;
-}
-
-.button:hover {
-    opacity: 0.7;
 }
 
 .button:last-child {
     margin-right: 0;
 }
 
-.button--delete {
+.button--blue {
+    color: var(--color-moderate-blue);
+}
+
+.button--red {
     color: var(--color-soft-red);
+}
+
+.button--enabled:hover {
+    opacity: 0.7;
+}
+
+.button--disabled {
+    opacity: 0.5;
 }
 
 .button__icon {

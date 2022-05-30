@@ -51,9 +51,9 @@ class AppButton extends HTMLButtonElement {
 
   connectedCallback() {
     if (this.label === "delete") {
-      this.classList.add("button", "button--delete");
+      this.classList.add("button", "button--red", "button--enabled");
     } else {
-      this.classList.add("button");
+      this.classList.add("button", "button--blue", "button--enabled");
     }
     const icon = this.createIcon();
     const label = this.createLabel();
@@ -74,6 +74,16 @@ class AppButton extends HTMLButtonElement {
     label.classList.add("button__label");
     label.textContent = this.label;
     return label;
+  }
+
+  enable() {
+    this.removeAttribute("disabled");
+    this.classList.replace("button--disabled", "button--enabled");
+  }
+
+  disable() {
+    this.setAttribute("disabled", "");
+    this.classList.replace("button--enabled", "button--disabled");
   }
 }
 

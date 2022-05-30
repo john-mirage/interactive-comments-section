@@ -4,6 +4,7 @@
                          "avatar   action";
     gap: 1.6rem;
     padding: 1.6rem;
+    margin-top: 1.6rem;
     background-color: var(--color-white);
     border-radius: 0.8rem;
 }
