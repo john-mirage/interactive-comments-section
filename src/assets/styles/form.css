@@ -44,8 +44,8 @@
     font-weight: 400;
 }
 
-.form__avatar {
-    grid-area: avatar;
+.form__user {
+    grid-area: user;
     display: flex;
     align-items: center;
 }
@@ -76,13 +76,13 @@
 
 @media screen and (min-width: 762px) {
     .form {
-        grid-template-areas: "avatar textarea action";
+        grid-template-areas: "user textarea action";
         grid-template-columns: auto 1fr auto;
         gap: 2.4rem;
         padding: 2.4rem;
     }
 
-    .form__avatar {
+    .form__user {
         align-items: flex-start;
     }
 }

@@ -57,6 +57,7 @@ class AppRoot extends HTMLElement {
     const form = document.createElement("form", { is: "app-form" });
     form.user = this.user;
     form.buttonLabel = "send";
+    form.inputId = "add-comment-form";
     return form;
   }
 }

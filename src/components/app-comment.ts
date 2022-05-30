@@ -38,55 +38,42 @@ class AppComment extends HTMLDivElement {
   }
 
   connectedCallback() {
+    const info = document.createElement("div");
+    const avatar = document.createElement("img");
+    const username = document.createElement("p");
+    const createdAt = document.createElement("p");
+    const content = document.createElement("p");
+    const score = document.createElement("div");
+    const actions = document.createElement("div");
     this.classList.add("comment");
-    const template = <HTMLTemplateElement>document.getElementById("template-comment");
-    const fragment = <DocumentFragment>template.content.cloneNode(true);
-    const commentScore = <HTMLDivElement>fragment.querySelector(".comment__score");
-    this.setAvatar(fragment.querySelector(".avatar"));
-    this.setUsername(fragment.querySelector(".comment__username"));
-    this.setCreatedAt(fragment.querySelector(".comment__created-at"));
-    this.setContent(fragment.querySelector(".comment__content"));
+    info.classList.add("comment__info");
+    avatar.classList.add("avatar");
+    username.classList.add("comment__username");
+    createdAt.classList.add("comment__created-at");
+    content.classList.add("comment__content");
+    score.classList.add("comment__score");
+    actions.classList.add("comment__actions");
+    avatar.setAttribute("src", this.comment.user.image.png);
+    avatar.setAttribute("alt", `Profile picture of ${this.comment.user.username}`);
+    username.textContent = this.comment.user.username;
+    createdAt.textContent = this.comment.createdAt;
+    content.textContent = this.comment.content;
     if (this.comment.replyingTo) {
-      const commentContent = <HTMLParagraphElement>fragment.querySelector(".comment__content");
       const replyingTo = this.createReplyingTo();
-      commentContent.prepend(replyingTo);
+      content.prepend(replyingTo);
     }
-    const commentActions = <HTMLDivElement>fragment.querySelector(".comment__actions");
     if (this.user.username === this.comment.user.username) {
       const deleteButton = this.createActionButton("delete");
       const editButton = this.createActionButton("edit");
-      commentActions.append(deleteButton, editButton);
+      actions.append(deleteButton, editButton);
     } else {
       const replyButton = this.createActionButton("reply");
-      commentActions.append(replyButton);
+      actions.append(replyButton);
     }
-    const score = this.createScore();
-    commentScore.appendChild(score);
-    this.appendChild(fragment);
-  }
-
-  setAvatar(element: HTMLImageElement | null) {
-    if (element) {
-      element.setAttribute("src", this.comment.user.image.png);
-    }
-  }
-
-  setUsername(element: HTMLParagraphElement | null) {
-    if (element) {
-      element.textContent = this.comment.user.username;
-    }
-  }
-
-  setCreatedAt(element: HTMLParagraphElement | null) {
-    if (element) {
-      element.textContent = this.comment.createdAt;
-    }
-  }
-
-  setContent(element: HTMLParagraphElement | null) {
-    if (element) {
-      element.textContent = this.comment.content;
-    }
+    const scoreButton = this.createScore();
+    info.append(avatar, username, createdAt);
+    score.append(scoreButton);
+    this.append(info, content, score, actions);
   }
 
   createScore() {
