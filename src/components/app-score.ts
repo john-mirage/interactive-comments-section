@@ -27,31 +27,40 @@ class AppScore extends HTMLDivElement {
     }
   }
 
-  connectedCallback() {
-    this.classList.add("score");
-    const template = <HTMLTemplateElement>document.getElementById("template-score");
-    const fragment = <DocumentFragment>template.content.cloneNode(true);
-    const minusButton = <HTMLButtonElement>fragment.querySelector(".score__button--minus");
-    const plusButton = <HTMLButtonElement>fragment.querySelector(".score__button--plus");
-    this.createIcon(minusButton, "minus");
-    this.createIcon(plusButton, "plus");
-    this.setScore(fragment.querySelector(".score__count"));
-    this.appendChild(fragment);
+  set count(count: number) {
+    this._count = count;
   }
 
-  createIcon(buttonElement: HTMLButtonElement , shape: string) {
+  connectedCallback() {
+    this.classList.add("score");
+    const plusButton = this.createButton("plus");
+    const count = this.createCount();
+    const minusButton = this.createButton("minus");
+    this.append(plusButton, count, minusButton);
+  }
+
+  createButton(name: string) {
+    const button = document.createElement("button");
+    const icon = this.createIcon(name);
+    button.classList.add("score__button", `score__button--${name}`);
+    button.append(icon);
+    return button;
+  }
+
+  createIcon(shape: string) {
     const iconElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     iconElement.classList.add("score__icon");
     iconElement.setAttribute("viewBox", icon[shape].viewBox);
     iconElement.setAttribute("fill", "currentColor");
     iconElement.innerHTML = icon[shape].path;
-    buttonElement.appendChild(iconElement);
+    return iconElement;
   }
 
-  setScore(element: HTMLParagraphElement | null) {
-    if (element) {
-      element.textContent = String(this.count);
-    }
+  createCount() {
+    const count = document.createElement("p");
+    count.classList.add("score__count");
+    count.textContent = String(this.count);
+    return count;
   }
 }
 

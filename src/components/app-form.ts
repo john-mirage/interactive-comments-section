@@ -30,12 +30,16 @@ class AppForm extends HTMLFormElement {
     this._user = user;
   }
 
+  set buttonLabel(label: string) {
+    this._buttonLabel = label;
+  }
+
   connectedCallback() {
     this.classList.add("form");
     const template = <HTMLTemplateElement>document.getElementById("template-form");
     const fragment = <DocumentFragment>template.content.cloneNode(true);
-    const avatarElement = <HTMLImageElement>this.querySelector(".avatar");
-    const submitButton = <HTMLButtonElement>this.querySelector(".form__button");
+    const avatarElement = <HTMLImageElement>fragment.querySelector(".avatar");
+    const submitButton = <HTMLButtonElement>fragment.querySelector(".form__button");
     avatarElement.setAttribute("src", this.user.image.png);
     submitButton.textContent = this.buttonLabel;
     this.appendChild(fragment);

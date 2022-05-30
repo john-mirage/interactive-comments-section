@@ -24,7 +24,7 @@ class AppRoot extends HTMLElement {
     if (this._comments) {
       return this._comments;
     } else {
-      throw new Error("The comment is not defined");
+      throw new Error("The comments are not defined");
     }
   }
 
@@ -32,7 +32,7 @@ class AppRoot extends HTMLElement {
     this._user = user;
   }
 
-  set comment(comments: Comment[]) {
+  set comments(comments: Comment[]) {
     this._comments = comments;
   }
 

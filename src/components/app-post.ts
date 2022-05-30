@@ -47,7 +47,7 @@ class AppPost extends HTMLDivElement {
 
   createPostCommentSection() {
     const postCommentSection = document.createElement("div");
-    postCommentSection.classList.add("post__comment");
+    postCommentSection.classList.add("post__section", "post__section--comment");
     return postCommentSection;
   }
 
