@@ -31,18 +31,28 @@
 
 .post__timeline {
     flex: 0 0 auto;
-    width: 8.8rem;
+    width: auto;
 }
 
 .post__line {
     display: block;
     width: 0.2rem;
     height: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-right: 1.6rem;
     background-color: var(--color-light-gray);
 }
 
 .post__replies {
     flex: 1 1 0;
+}
+
+@media screen and (min-width: 762px) {
+    .post__timeline {
+        width: 8.8rem;
+    }
+
+    .post__line {
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
