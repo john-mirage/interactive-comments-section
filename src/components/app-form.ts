@@ -51,16 +51,12 @@ class AppForm extends HTMLFormElement {
   connectedCallback() {
     const label = document.createElement("label");
     const input = document.createElement("textarea");
-    const user = document.createElement("div");
     const avatar = document.createElement("img");
-    const action = document.createElement("div");
     const button = document.createElement("button");
-    this.classList.add("form");
+    this.classList.add("form", "form--standalone");
     label.classList.add("form__label");
     input.classList.add("form__input");
-    user.classList.add("form__user");
-    avatar.classList.add("avatar", "avatar--form");
-    action.classList.add("form__action");
+    avatar.classList.add("form__avatar");
     button.classList.add("form__button");
     label.setAttribute("for", this.inputId);
     input.setAttribute("id", this.inputId);
@@ -69,9 +65,7 @@ class AppForm extends HTMLFormElement {
     avatar.setAttribute("alt", `Profile picture of ${this.user.username}`);
     button.setAttribute("type", "button");
     button.textContent = this.buttonLabel;
-    user.append(avatar);
-    action.append(button);
-    this.append(label, input, user, action);
+    this.append(label, input, avatar, button);
   }
 }
 

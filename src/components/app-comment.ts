@@ -2,7 +2,6 @@ import AppScoreInterface from "@interfaces/app-score";
 import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
 import AppButtonInterface from "@interfaces/app-button";
-import AppModalInterface from "@interfaces/app-modal";
 
 class AppComment extends HTMLDivElement {
   _user: User | false;
@@ -48,7 +47,7 @@ class AppComment extends HTMLDivElement {
     const actions = document.createElement("div");
     this.classList.add("comment");
     info.classList.add("comment__info");
-    avatar.classList.add("avatar");
+    avatar.classList.add("comment__avatar");
     username.classList.add("comment__username");
     createdAt.classList.add("comment__created-at");
     content.classList.add("comment__content");
@@ -60,42 +59,45 @@ class AppComment extends HTMLDivElement {
     createdAt.textContent = this.comment.createdAt;
     content.textContent = this.comment.content;
     info.append(avatar, username, createdAt);
-    const scoreButton = this.createScore();
+    const scoreButton = this.createScoreButton();
     score.append(scoreButton);
     if (this.comment.replyingTo) {
-      const replyingTo = this.createReplyingTo();
-      content.prepend(replyingTo);
+      const replyingToText = this.createReplyingToText();
+      content.prepend(replyingToText);
     }
     if (this.user.username === this.comment.user.username) {
-      const owned = document.createElement("p");
-      owned.classList.add("comment__owned");
-      owned.textContent = "you";
-      username.after(owned);
+      const ownedBadge = this.createOwnedBadge();
+      username.after(ownedBadge);
       const deleteButton = this.createActionButton("delete");
       const editButton = this.createActionButton("edit");
       deleteButton.addEventListener("click", () => {
-        const modal = <AppModalInterface>document.createElement("div", { is: "app-modal" });
-        modal.mount();
+
       });
       actions.append(deleteButton, editButton);
     } else {
       const replyButton = this.createActionButton("reply");
       replyButton.addEventListener("click", () => {
-        this.createReplyForm();
-        replyButton.disable();
+
       });
       actions.append(replyButton);
     }
     this.append(info, content, score, actions);
   }
 
-  createScore() {
+  createScoreButton() {
     const score = <AppScoreInterface>document.createElement("div", { is: "app-score" });
     score.count = this.comment.score;
     return score;
   }
 
-  createReplyingTo() {
+  createOwnedBadge() {
+    const owned = document.createElement("p");
+    owned.classList.add("comment__owned");
+    owned.textContent = "you";
+    return owned;
+  }
+
+  createReplyingToText() {
     const replyingTo = document.createElement("a");
     replyingTo.setAttribute("href", "#");
     replyingTo.classList.add("comment__replying-to");
