@@ -2,6 +2,7 @@ import AppScoreInterface from "@interfaces/app-score";
 import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
 import AppButtonInterface from "@interfaces/app-button";
+import AppModalInterface from "@interfaces/app-modal";
 
 class AppComment extends HTMLDivElement {
   _user: User | false;
@@ -71,7 +72,11 @@ class AppComment extends HTMLDivElement {
       const deleteButton = this.createActionButton("delete");
       const editButton = this.createActionButton("edit");
       deleteButton.addEventListener("click", () => {
-
+        const modal = <AppModalInterface>document.createElement("div", { is: "app-modal" });
+        modal.title = "Delete comment";
+        modal.description = "Are you sure you want to delete this comment? This will remove the comment and can’t be undone.";
+        modal.action = "yes, delete";
+        modal.mount();
       });
       editButton.addEventListener("click", () => {
         editButton.disable();
