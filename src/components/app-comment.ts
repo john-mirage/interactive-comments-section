@@ -3,6 +3,7 @@ import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
 import AppButtonInterface from "@interfaces/app-button";
 import AppModalInterface from "@interfaces/app-modal";
+import AppFormInterface from "@interfaces/app-form";
 
 class AppComment extends HTMLDivElement {
   _user: User | false;
@@ -97,7 +98,11 @@ class AppComment extends HTMLDivElement {
     } else {
       const replyButton = this.createActionButton("reply");
       replyButton.addEventListener("click", () => {
-
+        const form = <AppFormInterface>document.createElement("form", { is: "app-form" });
+        form.user = this.user;
+        form.buttonLabel = "reply";
+        form.inputId = `reply-form-${String(this.comment.id)}`;
+        this.after(form);
       });
       actions.append(replyButton);
     }
