@@ -1,10 +1,7 @@
 .form {
     display: flex;
-    padding: 1.6rem;
-    margin-top: 1.6rem;
-    background-color: var(--color-white);
-    border-radius: 0.8rem;
-    box-shadow: var(--shadow);
+    width: 100%;
+    height: auto;
 }
 
 .form--standalone {
@@ -12,11 +9,17 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 1.6rem;
+    padding: 1.6rem;
+    background-color: var(--color-white);
+    border-radius: 0.8rem;
+    box-shadow: var(--shadow);
 }
 
 .form--comment {
+    grid-area: comment;
     flex-direction: column;
-    justify-content: flex-end;
+    align-items: flex-end;
 }
 
 .form__avatar {
@@ -40,16 +43,24 @@
 
 .form__input {
     width: 100%;
-    height: 9.6rem;
     margin-bottom: 1.6rem;
     padding: 1.2rem 2.4rem;
     border-radius: 0.8rem;
     border: 0.1rem solid var(--color-light-gray);
     font-family: var(--font);
     font-size: 1.6rem;
-    font-weight: 500;
+    font-weight: 400;
+    line-height: 2.4rem;
     color: var(--color-dark-blue);
     resize: none;
+}
+
+.form--standalone > .form__input {
+    height: 9.6rem;
+}
+
+.form--comment > .form__input {
+    height: 12.4rem;
 }
 
 .form__input:focus {

@@ -73,6 +73,21 @@ class AppComment extends HTMLDivElement {
       deleteButton.addEventListener("click", () => {
 
       });
+      editButton.addEventListener("click", () => {
+        editButton.disable();
+        const form = document.createElement("form");
+        const label = document.createElement("label");
+        const input = document.createElement("textarea");
+        const button = document.createElement("button");
+        form.classList.add("form", "form--comment");
+        label.classList.add("form__label");
+        input.classList.add("form__input");
+        button.classList.add("form__button");
+        input.value = `@${this.comment.replyingTo} ${this.comment.content}`;
+        button.textContent = "update";
+        form.append(label, input, button);
+        content.replaceWith(form);
+      });
       actions.append(deleteButton, editButton);
     } else {
       const replyButton = this.createActionButton("reply");

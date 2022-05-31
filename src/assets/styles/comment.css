@@ -1,8 +1,9 @@
 .comment {
     display: grid;
-    grid-template-areas: "info        info"
-                         "comment     comment"
-                         "button-vote actions";
+    grid-template-areas: "info    info"
+                         "comment comment"
+                         "score   actions";
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.6rem 2.4rem;
     padding: 1.6rem;
     background-color: var(--color-white);
@@ -15,7 +16,7 @@
 }
 
 .comment__score {
-    grid-area: button-vote;
+    grid-area: score;
 }
 
 .comment__actions {
@@ -100,8 +101,9 @@
 
 @media screen and (min-width: 762px) {
     .comment {
-        grid-template-areas: "button-vote info    actions"
-                             "button-vote comment comment";
+        grid-template-areas: "score info    actions"
+                             "score comment comment";
+        grid-template-columns: auto 1fr auto;
         padding: 2.4rem;
         gap: 1.6rem 2.4rem;
     }
