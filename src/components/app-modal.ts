@@ -18,6 +18,8 @@ class AppModal extends HTMLDivElement {
     this.descriptionElement = document.createElement("p");
     this.cancelButtonElement = document.createElement("button");
     this.confirmButtonElement = document.createElement("button");
+    this.unmount = this.unmount.bind(this);
+    this.handleConfirmButton = this.handleConfirmButton.bind(this);
   }
 
   get modal() {

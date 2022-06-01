@@ -23,6 +23,7 @@ class AppComment extends HTMLDivElement {
   deleteModalElement?: AppModalInterface;
   editFormElement?: HTMLFormElement;
   replyFormElement?: AppFormInterface;
+  updateButtonElement?: HTMLButtonElement;
 
   constructor() {
     super();
@@ -36,6 +37,10 @@ class AppComment extends HTMLDivElement {
     this.scoreElement = document.createElement("div");
     this.scoreButtonElement = <AppScoreInterface>document.createElement("div", { is: "app-score" });
     this.actionsElement = document.createElement("div");
+    this.handleDeleteButton = this.handleDeleteButton.bind(this);
+    this.handleEditButton = this.handleEditButton.bind(this);
+    this.handleReplyButton = this.handleReplyButton.bind(this);
+    this.handleUpdateButton = this.handleUpdateButton.bind(this);
   }
 
   get user() {
@@ -88,6 +93,7 @@ class AppComment extends HTMLDivElement {
     this.deleteButtonElement?.removeEventListener("click", this.handleDeleteButton);
     this.editButtonElement?.removeEventListener("click", this.handleEditButton);
     this.replyButtonElement?.removeEventListener("click", this.handleReplyButton);
+    this.updateButtonElement?.addEventListener("click", this.handleCommentEdit);
   }
 
   handleReplyingToText() {
@@ -114,18 +120,28 @@ class AppComment extends HTMLDivElement {
 
   handleDeleteButton() {
     const modal = this.getDeleteModal();
-    modal.mount();
+    document.body.prepend(modal);
   }
 
   handleEditButton() {
     this.editButtonElement?.disable();
-    const editForm = this.getEditForm();
-    this.contentElement?.replaceWith(editForm);
+    const editFormElement = this.getEditForm();
+    this.contentElement?.replaceWith(editFormElement);
   }
 
   handleReplyButton() {
-    const replyForm = this.getReplyForm();
-    this.after(replyForm);
+    const replyFormElement = this.getReplyForm();
+    this.after(replyFormElement);
+  }
+
+  handleUpdateButton() {
+    this.replyFormElement?.replaceWith(this.contentElement);
+  }
+
+  handleCommentEdit(event: Event) {
+    event.preventDefault();
+    const formData = new FormData(<HTMLFormElement>event.target);
+    console.log(formData.get("comment"));
   }
 
   getDeleteModal() {
@@ -147,16 +163,19 @@ class AppComment extends HTMLDivElement {
   getEditForm() {
     if (!this.editFormElement) {
       this.editFormElement = document.createElement("form");
-      const label = document.createElement("label");
-      const input = document.createElement("textarea");
-      const button = document.createElement("button");
+      const labelElement = document.createElement("label");
+      const inputElement = document.createElement("textarea");
+      this.updateButtonElement = document.createElement("button");
       this.editFormElement.classList.add("form", "form--comment");
-      label.classList.add("form__label");
-      input.classList.add("form__input");
-      button.classList.add("form__button");
-      input.value = `@${this.comment.replyingTo} ${this.comment.content}`;
-      button.textContent = "update";
-      this.editFormElement.append(label, input, button);
+      labelElement.classList.add("form__label");
+      inputElement.classList.add("form__input");
+      this.updateButtonElement.classList.add("form__button");
+      inputElement.setAttribute("name", "comment");
+      inputElement.value = `@${this.comment.replyingTo} ${this.comment.content}`;
+      this.updateButtonElement.textContent = "update";
+      this.updateButtonElement.setAttribute("type", "submit");
+      this.editFormElement.append(labelElement, inputElement, this.updateButtonElement);
+      this.editFormElement.addEventListener("submit", this.handleCommentEdit);
       return this.editFormElement;
     } else {
       return this.editFormElement;

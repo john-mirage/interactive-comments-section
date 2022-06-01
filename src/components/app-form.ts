@@ -72,7 +72,7 @@ class AppForm extends HTMLFormElement {
       this.avatarElement.setAttribute("alt", `Profile picture of ${this.user.username}`);
       this.sendButtonElement.setAttribute("type", "button");
       this.sendButtonElement.textContent = this.buttonLabel;
-      this.append(this.labelElement, this.inputElement, this.avatarElement, this.buttonElement);
+      this.append(this.labelElement, this.inputElement, this.avatarElement, this.sendButtonElement);
       this.initialCall = false;
     }
     this.sendButtonElement.addEventListener("click", this.handleSendButton);
