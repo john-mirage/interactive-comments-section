@@ -4,12 +4,22 @@ class AppForm extends HTMLFormElement {
   _user: User | false;
   _buttonLabel: string | false;
   _inputId: string | false;
+  initialCall: boolean;
+  labelElement: HTMLLabelElement;
+  inputElement: HTMLTextAreaElement;
+  avatarElement: HTMLImageElement;
+  sendButtonElement: HTMLButtonElement;
 
   constructor() {
     super();
     this._user = false;
     this._buttonLabel = false;
     this._inputId = false;
+    this.initialCall = true;
+    this.labelElement = document.createElement("label");
+    this.inputElement = document.createElement("textarea");
+    this.avatarElement = document.createElement("img");
+    this.sendButtonElement = document.createElement("button");
   }
 
   get user() {
@@ -49,23 +59,33 @@ class AppForm extends HTMLFormElement {
   }
 
   connectedCallback() {
-    const label = document.createElement("label");
-    const input = document.createElement("textarea");
-    const avatar = document.createElement("img");
-    const button = document.createElement("button");
-    this.classList.add("form", "form--standalone");
-    label.classList.add("form__label");
-    input.classList.add("form__input");
-    avatar.classList.add("form__avatar");
-    button.classList.add("form__button");
-    label.setAttribute("for", this.inputId);
-    input.setAttribute("id", this.inputId);
-    input.setAttribute("placeholder", "Add a comment...");
-    avatar.setAttribute("src", this.user.image.png);
-    avatar.setAttribute("alt", `Profile picture of ${this.user.username}`);
-    button.setAttribute("type", "button");
-    button.textContent = this.buttonLabel;
-    this.append(label, input, avatar, button);
+    if (this.initialCall) {
+      this.classList.add("form", "form--standalone");
+      this.labelElement.classList.add("form__label");
+      this.inputElement.classList.add("form__input");
+      this.avatarElement.classList.add("form__avatar");
+      this.sendButtonElement.classList.add("form__button");
+      this.labelElement.setAttribute("for", this.inputId);
+      this.inputElement.setAttribute("id", this.inputId);
+      this.inputElement.setAttribute("placeholder", "Add a comment...");
+      this.avatarElement.setAttribute("src", this.user.image.png);
+      this.avatarElement.setAttribute("alt", `Profile picture of ${this.user.username}`);
+      this.sendButtonElement.setAttribute("type", "button");
+      this.sendButtonElement.textContent = this.buttonLabel;
+      this.append(this.labelElement, this.inputElement, this.avatarElement, this.buttonElement);
+      this.initialCall = false;
+    }
+    this.sendButtonElement.addEventListener("click", this.handleSendButton);
+  }
+
+  disconnectedCallback() {
+    this.sendButtonElement.removeEventListener("click", this.handleSendButton);
+  }
+
+  handleSendButton() {
+    const formData = new FormData(this);
+    const customEvent = new CustomEvent("submit-form", { detail: { formData } });
+    this.dispatchEvent(customEvent);
   }
 }
 

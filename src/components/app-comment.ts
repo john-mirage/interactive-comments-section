@@ -8,11 +8,34 @@ import AppFormInterface from "@interfaces/app-form";
 class AppComment extends HTMLDivElement {
   _user: User | false;
   _comment: Comment | false;
+  infoElement: HTMLDivElement;
+  avatarElement: HTMLImageElement;
+  usernameElement: HTMLParagraphElement;
+  createdAtElement: HTMLParagraphElement;
+  contentElement: HTMLParagraphElement;
+  scoreElement: HTMLDivElement;
+  scoreButtonElement: AppScoreInterface;
+  actionsElement: HTMLDivElement;
+  badgeElement?: HTMLParagraphElement;
+  deleteButtonElement?: AppButtonInterface;
+  editButtonElement?: AppButtonInterface;
+  replyButtonElement?: AppButtonInterface;
+  deleteModalElement?: AppModalInterface;
+  editFormElement?: HTMLFormElement;
+  replyFormElement?: AppFormInterface;
 
   constructor() {
     super();
     this._user = false;
     this._comment = false;
+    this.infoElement = document.createElement("div");
+    this.avatarElement = document.createElement("img");
+    this.usernameElement = document.createElement("p");
+    this.createdAtElement = document.createElement("p");
+    this.contentElement = document.createElement("p");
+    this.scoreElement = document.createElement("div");
+    this.scoreButtonElement = <AppScoreInterface>document.createElement("div", { is: "app-score" });
+    this.actionsElement = document.createElement("div");
   }
 
   get user() {
@@ -40,86 +63,123 @@ class AppComment extends HTMLDivElement {
   }
 
   connectedCallback() {
-    const info = document.createElement("div");
-    const avatar = document.createElement("img");
-    const username = document.createElement("p");
-    const createdAt = document.createElement("p");
-    const content = document.createElement("p");
-    const score = document.createElement("div");
-    const actions = document.createElement("div");
     this.classList.add("comment");
-    info.classList.add("comment__info");
-    avatar.classList.add("comment__avatar");
-    username.classList.add("comment__username");
-    createdAt.classList.add("comment__created-at");
-    content.classList.add("comment__content");
-    score.classList.add("comment__score");
-    actions.classList.add("comment__actions");
-    avatar.setAttribute("src", this.comment.user.image.png);
-    avatar.setAttribute("alt", `Profile picture of ${this.comment.user.username}`);
-    username.textContent = this.comment.user.username;
-    createdAt.textContent = this.comment.createdAt;
-    content.textContent = this.comment.content;
-    info.append(avatar, username, createdAt);
-    const scoreButton = this.createScoreButton();
-    score.append(scoreButton);
+    this.infoElement.classList.add("comment__info");
+    this.avatarElement.classList.add("comment__avatar");
+    this.usernameElement.classList.add("comment__username");
+    this.createdAtElement.classList.add("comment__created-at");
+    this.contentElement.classList.add("comment__content");
+    this.scoreElement.classList.add("comment__score");
+    this.actionsElement.classList.add("comment__actions");
+    this.avatarElement.setAttribute("src", this.comment.user.image.png);
+    this.avatarElement.setAttribute("alt", `Profile picture of ${this.comment.user.username}`);
+    this.usernameElement.textContent = this.comment.user.username;
+    this.createdAtElement.textContent = this.comment.createdAt;
+    this.contentElement.textContent = this.comment.content;
+    this.scoreButtonElement.count = this.comment.score;
+    this.handleReplyingToText();
+    this.handleActionButtons();
+    this.infoElement.append(this.avatarElement, this.usernameElement, this.createdAtElement);
+    this.scoreElement.append(this.scoreButtonElement);
+    this.append(this.infoElement, this.contentElement, this.scoreElement, this.actionsElement);
+  }
+
+  disconnectedCallback() {
+    this.deleteButtonElement?.removeEventListener("click", this.handleDeleteButton);
+    this.editButtonElement?.removeEventListener("click", this.handleEditButton);
+    this.replyButtonElement?.removeEventListener("click", this.handleReplyButton);
+  }
+
+  handleReplyingToText() {
     if (this.comment.replyingTo) {
       const replyingToText = this.createReplyingToText();
-      content.prepend(replyingToText);
+      this.contentElement.prepend(replyingToText);
     }
+  }
+
+  handleActionButtons() {
     if (this.user.username === this.comment.user.username) {
-      const ownedBadge = this.createOwnedBadge();
-      username.after(ownedBadge);
-      const deleteButton = this.createActionButton("delete");
-      const editButton = this.createActionButton("edit");
-      deleteButton.addEventListener("click", () => {
-        const modal = <AppModalInterface>document.createElement("div", { is: "app-modal" });
-        modal.title = "Delete comment";
-        modal.description = "Are you sure you want to delete this comment? This will remove the comment and can’t be undone.";
-        modal.action = "yes, delete";
-        modal.mount();
-      });
-      editButton.addEventListener("click", () => {
-        editButton.disable();
-        const form = document.createElement("form");
-        const label = document.createElement("label");
-        const input = document.createElement("textarea");
-        const button = document.createElement("button");
-        form.classList.add("form", "form--comment");
-        label.classList.add("form__label");
-        input.classList.add("form__input");
-        button.classList.add("form__button");
-        input.value = `@${this.comment.replyingTo} ${this.comment.content}`;
-        button.textContent = "update";
-        form.append(label, input, button);
-        content.replaceWith(form);
-      });
-      actions.append(deleteButton, editButton);
+      this.badgeElement = this.createOwnerBadge();
+      this.deleteButtonElement = this.createActionButton("delete");
+      this.editButtonElement = this.createActionButton("edit");
+      this.deleteButtonElement.addEventListener("click", this.handleDeleteButton);
+      this.editButtonElement.addEventListener("click", this.handleEditButton);
+      this.actionsElement.append(this.deleteButtonElement, this.editButtonElement);
     } else {
-      const replyButton = this.createActionButton("reply");
-      replyButton.addEventListener("click", () => {
-        const form = <AppFormInterface>document.createElement("form", { is: "app-form" });
-        form.user = this.user;
-        form.buttonLabel = "reply";
-        form.inputId = `reply-form-${String(this.comment.id)}`;
-        this.after(form);
-      });
-      actions.append(replyButton);
+      this.replyButtonElement = this.createActionButton("reply");
+      this.replyButtonElement.addEventListener("click", this.handleReplyButton);
+      this.actionsElement.append(this.replyButtonElement);
     }
-    this.append(info, content, score, actions);
   }
 
-  createScoreButton() {
-    const score = <AppScoreInterface>document.createElement("div", { is: "app-score" });
-    score.count = this.comment.score;
-    return score;
+  handleDeleteButton() {
+    const modal = this.getDeleteModal();
+    modal.mount();
   }
 
-  createOwnedBadge() {
-    const owned = document.createElement("p");
-    owned.classList.add("comment__owned");
-    owned.textContent = "you";
-    return owned;
+  handleEditButton() {
+    this.editButtonElement?.disable();
+    const editForm = this.getEditForm();
+    this.contentElement?.replaceWith(editForm);
+  }
+
+  handleReplyButton() {
+    const replyForm = this.getReplyForm();
+    this.after(replyForm);
+  }
+
+  getDeleteModal() {
+    if (!this.deleteModalElement) {
+      this.deleteModalElement = <AppModalInterface>document.createElement("div", { is: "app-modal" });
+      this.deleteModalElement.modal = {
+        title: "Delete comment",
+        description: "Are you sure you want to delete this comment? This will remove the comment and can’t be undone.",
+        eventType: "delete-comment",
+        eventDetail: this.comment,
+        buttonLabel: "yes, delete"
+      }
+      return this.deleteModalElement;
+    } else {
+      return this.deleteModalElement;
+    }
+  }
+
+  getEditForm() {
+    if (!this.editFormElement) {
+      this.editFormElement = document.createElement("form");
+      const label = document.createElement("label");
+      const input = document.createElement("textarea");
+      const button = document.createElement("button");
+      this.editFormElement.classList.add("form", "form--comment");
+      label.classList.add("form__label");
+      input.classList.add("form__input");
+      button.classList.add("form__button");
+      input.value = `@${this.comment.replyingTo} ${this.comment.content}`;
+      button.textContent = "update";
+      this.editFormElement.append(label, input, button);
+      return this.editFormElement;
+    } else {
+      return this.editFormElement;
+    }
+  }
+
+  getReplyForm() {
+    if (!this.replyFormElement) {
+      this.replyFormElement = <AppFormInterface>document.createElement("form", { is: "app-form" });
+      this.replyFormElement.user = this.user;
+      this.replyFormElement.buttonLabel = "reply";
+      this.replyFormElement.inputId = `add-reply-form-${String(this.comment.id)}`;
+      return this.replyFormElement;
+    } else {
+      return this.replyFormElement;
+    }
+  }
+
+  createOwnerBadge() {
+    const ownerBadgeElement = document.createElement("p");
+    ownerBadgeElement.classList.add("comment__owned");
+    ownerBadgeElement.textContent = "you";
+    return ownerBadgeElement;
   }
 
   createReplyingToText() {
@@ -135,14 +195,6 @@ class AppComment extends HTMLDivElement {
     button.icon = name;
     button.label = name;
     return button;
-  }
-
-  createReplyForm() {
-    const replyForm = document.createElement("form", { is: "app-form" });
-    replyForm.user = this.user;
-    replyForm.buttonLabel = "reply";
-    replyForm.inputId = `add-reply-form-${String(this.comment.id)}`;
-    this.after(replyForm);
   }
 }
 

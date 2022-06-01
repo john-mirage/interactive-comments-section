@@ -5,11 +5,13 @@ import User from "@interfaces/user";
 class AppPost extends HTMLDivElement {
   _user: User | false;
   _comment: Comment | false;
+  commentSectionElement: HTMLDivElement;
 
   constructor() {
     super();
     this._user = false;
     this._comment = false;
+    this.commentSectionElement = document.createElement("div");
   }
 
   get user() {
@@ -38,39 +40,11 @@ class AppPost extends HTMLDivElement {
 
   connectedCallback() {
     this.classList.add("post");
-    const postCommentSection = this.createPostCommentSection();
-    const comment = this.createComment(this.comment);
-    postCommentSection.appendChild(comment);
-    this.append(postCommentSection);
-    if (this.comment.replies && this.comment.replies.length > 0) {
-      const postReplySection = this.createPostReplySection();
-      const postReplies = <HTMLDivElement>postReplySection.querySelector(".post__replies");
-      this.comment.replies.forEach((reply) => {
-        const replyComment = this.createComment(reply);
-        postReplies.append(replyComment);
-      });
-      this.append(postReplySection);
-    }
-  }
-
-  createPostCommentSection() {
-    const postCommentSection = document.createElement("div");
-    postCommentSection.classList.add("post__section", "post__section--comment");
-    return postCommentSection;
-  }
-
-  createPostReplySection() {
-    const postReplySection = document.createElement("div");
-    const postTimeline = document.createElement("div");
-    const postLine = document.createElement("div");
-    const postReplies = document.createElement("div");
-    postReplySection.classList.add("post__section", "post__section--reply");
-    postTimeline.classList.add("post__timeline");
-    postLine.classList.add("post__line");
-    postReplies.classList.add("post__replies");
-    postTimeline.appendChild(postLine);
-    postReplySection.append(postTimeline, postReplies);
-    return postReplySection;
+    this.commentSectionElement.classList.add("post__section", "post__section--comment");
+    const commentElement = this.createComment(this.comment);
+    this.commentSectionElement.append(commentElement);
+    this.append(this.commentSectionElement);
+    this.handleReplySection();
   }
 
   createComment(comment: Comment) {
@@ -78,6 +52,31 @@ class AppPost extends HTMLDivElement {
     commentElement.user = this.user;
     commentElement.comment = comment;
     return commentElement;
+  }
+
+  createReplySection() {
+    const replySectionElement = document.createElement("div");
+    const timelineElement = document.createElement("div");
+    const lineElement = document.createElement("div");
+    const repliesElement = document.createElement("div");
+    replySectionElement.classList.add("post__section", "post__section--reply");
+    timelineElement.classList.add("post__timeline");
+    lineElement.classList.add("post__line");
+    repliesElement.classList.add("post__replies");
+    timelineElement.appendChild(lineElement);
+    replySectionElement.append(timelineElement, repliesElement);
+    return { replySectionElement, repliesElement};
+  }
+
+  handleReplySection() {
+    if (this.comment.replies && this.comment.replies.length > 0) {
+      const { replySectionElement, repliesElement } = this.createReplySection();
+      this.comment.replies.forEach((reply) => {
+        const comment = this.createComment(reply);
+        repliesElement.append(comment);
+      });
+      this.append(replySectionElement);
+    }
   }
 }
 

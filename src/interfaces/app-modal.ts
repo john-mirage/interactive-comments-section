@@ -1,10 +1,9 @@
+import Modal from "@interfaces/modal";
+
 export default interface AppModalInterface extends HTMLDivElement {
-  _title: string;
-  _description: string;
-  _action: string;
-  title: string;
-  description: string;
-  action: string;
+  _modal: Modal;
+  modal: Modal;
+  cancelButton?: HTMLButtonElement;
   mount: () => void;
   unmount: () => void;
 }

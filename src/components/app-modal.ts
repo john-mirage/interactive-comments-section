@@ -1,80 +1,70 @@
+import Modal from "@interfaces/modal";
+
 class AppModal extends HTMLDivElement {
-  _title: string | false;
-  _description: string | false;
-  _action: string | false;
+  _modal: Modal | false;
+  initialCall: boolean;
+  dialogElement: HTMLDivElement;
+  titleElement: HTMLHeadingElement;
+  descriptionElement: HTMLParagraphElement;
+  cancelButtonElement: HTMLButtonElement;
+  confirmButtonElement: HTMLButtonElement;
 
   constructor() {
     super();
-    this._title = false;
-    this._description = false;
-    this._action = false
+    this._modal = false;
+    this.initialCall = true;
+    this.dialogElement = document.createElement("div");
+    this.titleElement = document.createElement("h2");
+    this.descriptionElement = document.createElement("p");
+    this.cancelButtonElement = document.createElement("button");
+    this.confirmButtonElement = document.createElement("button");
   }
 
-  get title() {
-    if (this._title) {
-      return this._title;
+  get modal() {
+    if (this._modal) {
+      return this._modal;
     } else {
       throw new Error("The title is not defined");
     }
   }
 
-  get description() {
-    if (this._description) {
-      return this._description;
-    } else {
-      throw new Error("The description is not defined");
-    }
-  }
-
-  get action() {
-    if (this._action) {
-      return this._action;
-    } else {
-      throw new Error("The action is not defined");
-    }
-  }
-
-  set title(title: string) {
-    this._title = title;
-  }
-
-  set description(description: string) {
-    this._description = description;
-  }
-
-  set action(action: string) {
-    this._action = action;
+  set modal(modal: Modal) {
+    this._modal = modal;
   }
 
   connectedCallback() {
-    const dialog = document.createElement("div");
-    const title = document.createElement("h2");
-    const description = document.createElement("p");
-    const cancelButton = document.createElement("button");
-    const confirmButton = document.createElement("button");
-    this.classList.add("modal");
-    dialog.classList.add("modal__dialog");
-    title.classList.add("modal__title");
-    description.classList.add("modal__description");
-    cancelButton.classList.add("modal__button");
-    confirmButton.classList.add("modal__button", "modal__button--red");
-    title.textContent = this.title;
-    description.textContent = this.description;
-    cancelButton.textContent = "No, Cancel";
-    confirmButton.textContent = this.action;
-    dialog.append(title, description, cancelButton, confirmButton);
-    this.append(dialog);
-    cancelButton.addEventListener("click", () => {
-      this.unmount();
-    });
+    if (this.initialCall) {
+      this.classList.add("modal");
+      this.dialogElement.classList.add("modal__dialog");
+      this.titleElement.classList.add("modal__title");
+      this.descriptionElement.classList.add("modal__description");
+      this.cancelButtonElement.classList.add("modal__button");
+      this.confirmButtonElement.classList.add("modal__button", "modal__button--red");
+      this.titleElement.textContent = this.modal.title;
+      this.descriptionElement.textContent = this.modal.description;
+      this.cancelButtonElement.textContent = "No, Cancel";
+      this.confirmButtonElement.textContent = this.modal.buttonLabel;
+      this.dialogElement.append(this.titleElement, this.descriptionElement, this.cancelButtonElement, this.confirmButtonElement);
+      this.append(this.dialogElement);
+      this.initialCall = false;
+    }
+    this.cancelButtonElement.addEventListener("click", this.unmount);
+    this.confirmButtonElement.addEventListener("click", this.handleConfirmButton);
   }
 
-  mount() {
-    document.body.prepend(this);
+  disconnectedCallback() {
+    this.cancelButtonElement.removeEventListener("click", this.unmount);
+    this.confirmButtonElement.removeEventListener("click", this.handleConfirmButton);
   }
 
   unmount() {
     document.body.removeChild(this);
+  }
+
+  handleConfirmButton() {
+    const customEvent = new CustomEvent("delete-comment", { detail: { data: this.modal.eventDetail } });
+    this.dispatchEvent(customEvent);
+    this.unmount();
   }
 }
 

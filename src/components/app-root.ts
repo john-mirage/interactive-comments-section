@@ -1,6 +1,7 @@
 import User from "@interfaces/user";
 import Comment from "@interfaces/comment";
 import AppPostInterface from "@interfaces/app-post";
+import AppFormInterface from "@interfaces/app-form";
 
 class AppRoot extends HTMLElement {
   _user: User | false;
@@ -40,10 +41,10 @@ class AppRoot extends HTMLElement {
     this.classList.add("app");
     this.comments.forEach((comment) => {
       const post = this.createPost(comment);
-      this.appendChild(post);
+      this.append(post);
     });
-    const form = this.createForm();
-    this.appendChild(form);
+    const sendForm = this.createSendForm();
+    this.append(sendForm);
   }
 
   createPost(comment: Comment) {
@@ -53,12 +54,12 @@ class AppRoot extends HTMLElement {
     return post;
   }
 
-  createForm() {
-    const form = document.createElement("form", { is: "app-form" });
-    form.user = this.user;
-    form.buttonLabel = "send";
-    form.inputId = "add-comment-form";
-    return form;
+  createSendForm() {
+    const sendForm = <AppFormInterface>document.createElement("form", { is: "app-form" });
+    sendForm.user = this.user;
+    sendForm.buttonLabel = "send";
+    sendForm.inputId = "add-comment-form";
+    return sendForm;
   }
 }
 

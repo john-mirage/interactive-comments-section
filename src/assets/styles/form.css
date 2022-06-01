@@ -65,7 +65,7 @@
 
 .form__input:focus {
     outline: none;
-    border: 0.1rem solid var(--color-dark-blue);
+    border: 0.1rem solid var(--color-moderate-blue);
 }
 
 .form__input::placeholder {
