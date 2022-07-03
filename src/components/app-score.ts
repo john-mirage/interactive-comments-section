@@ -12,18 +12,17 @@ const icon: Icon = {
 };
 
 class AppScore extends HTMLDivElement {
-  _count: number | false;
+  _count?: number;
 
   constructor() {
     super();
-    this._count = false;
   }
 
   get count() {
-    if (this._count) {
+    if ("_count" in this && this._count !== undefined) {
       return this._count;
     } else {
-      throw new Error("The score is not defined");
+      throw new Error("The score is not valid or not defined");
     }
   }
 

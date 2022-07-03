@@ -1,4 +1,4 @@
 export default interface AppScoreInterface extends HTMLDivElement {
-  _count: number;
+  _count?: number;
   count: number;
 }

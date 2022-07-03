@@ -16,17 +16,15 @@ const icon: Icon = {
 }
 
 class AppButton extends HTMLButtonElement {
-  _icon: string | false;
-  _label: string | false;
+  _icon?: string;
+  _label?: string;
 
   constructor() {
     super();
-    this._icon = false;
-    this._label = false;
   }
 
   get icon() {
-    if (this._icon) {
+    if ("_icon" in this && this._icon !== undefined) {
       return this._icon;
     } else {
       throw new Error("The icon is not defined");
@@ -34,7 +32,7 @@ class AppButton extends HTMLButtonElement {
   }
 
   get label() {
-    if (this._label) {
+    if ("_label" in this && this._label !== undefined) {
       return this._label;
     } else {
       throw new Error("The label is not defined");

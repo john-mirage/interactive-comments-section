@@ -6,8 +6,8 @@ import AppModalInterface from "@interfaces/app-modal";
 import AppFormInterface from "@interfaces/app-form";
 
 class AppComment extends HTMLDivElement {
-  _user: User | false;
-  _comment: Comment | false;
+  _user?: User;
+  _comment?: Comment;
   infoElement: HTMLDivElement;
   avatarElement: HTMLImageElement;
   usernameElement: HTMLParagraphElement;
@@ -27,8 +27,6 @@ class AppComment extends HTMLDivElement {
 
   constructor() {
     super();
-    this._user = false;
-    this._comment = false;
     this.infoElement = document.createElement("div");
     this.avatarElement = document.createElement("img");
     this.usernameElement = document.createElement("p");
@@ -44,7 +42,7 @@ class AppComment extends HTMLDivElement {
   }
 
   get user() {
-    if (this._user) {
+    if ("_user" in this && this._user !== undefined) {
       return this._user;
     } else {
       throw new Error("The user is not defined");
@@ -52,7 +50,7 @@ class AppComment extends HTMLDivElement {
   }
 
   get comment() {
-    if (this._comment) {
+    if ("_comment" in this && this._comment !== undefined) {
       return this._comment;
     } else {
       throw new Error("The comment is not defined");
@@ -169,7 +167,7 @@ class AppComment extends HTMLDivElement {
       this.editFormElement.classList.add("form", "form--comment");
       labelElement.classList.add("form__label");
       inputElement.classList.add("form__input");
-      this.updateButtonElement.classList.add("form__button");
+      this.updateButtonElement.classList.add("form__button", "form__button--confirm");
       inputElement.setAttribute("name", "comment");
       inputElement.value = `@${this.comment.replyingTo} ${this.comment.content}`;
       this.updateButtonElement.textContent = "update";
@@ -188,6 +186,7 @@ class AppComment extends HTMLDivElement {
       this.replyFormElement.user = this.user;
       this.replyFormElement.buttonLabel = "reply";
       this.replyFormElement.inputId = `add-reply-form-${String(this.comment.id)}`;
+      this.replyFormElement.isReplyForm = true;
       return this.replyFormElement;
     } else {
       return this.replyFormElement;

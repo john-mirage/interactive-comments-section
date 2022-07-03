@@ -3,19 +3,17 @@ import Comment from "@interfaces/comment";
 import User from "@interfaces/user";
 
 class AppPost extends HTMLDivElement {
-  _user: User | false;
-  _comment: Comment | false;
+  _user?: User;
+  _comment?: Comment;
   commentSectionElement: HTMLDivElement;
 
   constructor() {
     super();
-    this._user = false;
-    this._comment = false;
     this.commentSectionElement = document.createElement("div");
   }
 
   get user() {
-    if (this._user) {
+    if ("_user" in this && this._user !== undefined) {
       return this._user;
     } else {
       throw new Error("The user is not defined");
@@ -23,7 +21,7 @@ class AppPost extends HTMLDivElement {
   }
 
   get comment() {
-    if (this._comment) {
+    if ("_comment" in this && this._comment !== undefined) {
       return this._comment;
     } else {
       throw new Error("The comment is not defined");

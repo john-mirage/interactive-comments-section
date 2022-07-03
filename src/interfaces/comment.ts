@@ -1,7 +1,7 @@
 import User from "@interfaces/user";
 
 export default interface Comment {
-  id: number;
+  id: string;
   content: string;
   createdAt: string;
   score: number;

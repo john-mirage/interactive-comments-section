@@ -1,7 +1,7 @@
 import Modal from "@interfaces/modal";
 
 class AppModal extends HTMLDivElement {
-  _modal: Modal | false;
+  _modal?: Modal;
   initialCall: boolean;
   dialogElement: HTMLDivElement;
   titleElement: HTMLHeadingElement;
@@ -11,7 +11,6 @@ class AppModal extends HTMLDivElement {
 
   constructor() {
     super();
-    this._modal = false;
     this.initialCall = true;
     this.dialogElement = document.createElement("div");
     this.titleElement = document.createElement("h2");
@@ -23,7 +22,7 @@ class AppModal extends HTMLDivElement {
   }
 
   get modal() {
-    if (this._modal) {
+    if ("_modal" in this && this._modal !== undefined) {
       return this._modal;
     } else {
       throw new Error("The title is not defined");
