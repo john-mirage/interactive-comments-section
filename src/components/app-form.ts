@@ -115,7 +115,6 @@ class AppForm extends HTMLFormElement {
 
   handleSendButton() {
     const formData = new FormData(this);
-    console.log(this)
     const customEvent = new CustomEvent("submit-form", { detail: { formData }, bubbles: true });
     this.dispatchEvent(customEvent);
   }

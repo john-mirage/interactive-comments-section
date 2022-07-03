@@ -79,6 +79,12 @@
     flex-direction: row;
 }
 
+.form__button-row {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+}
+
 .form__button {
     width: 10.4rem;
     height: 4.8rem;
@@ -94,16 +100,16 @@
     cursor: pointer;
 }
 
+.form__button:last-child {
+    margin-right: 0;
+}
+
 .form__button--confirm {
     background-color: var(--color-moderate-blue);
 }
 
 .form__button--cancel {
     background-color: var(--color-soft-red);
-}
-
-.form__button:last-child {
-    margin-right: 0;
 }
 
 .form__button:hover {
@@ -137,12 +143,12 @@
         flex-direction: column;
     }
 
-    .form__button {
+    .form__button-group > .form__button {
         margin-right: 0;
         margin-bottom: 0.8rem;
     }
 
-    .form__button:last-child {
+    .form__button-group > .form__button:last-child {
         margin-bottom: 0;
     }
 }

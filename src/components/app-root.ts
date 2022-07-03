@@ -46,16 +46,18 @@ class AppRoot extends HTMLElement {
     this.append(sendForm);
     this.addEventListener("submit-form", (event) => {
       const content = (<CustomEvent>event).detail.formData.get("comment");
-      const comment: Comment = {
-        id: nanoid(),
-        content: content,
-        createdAt: "now",
-        score: 0,
-        user: this.user,
-        replies: [],
+      if (content) {
+        const comment: Comment = {
+          id: nanoid(),
+          content: content,
+          createdAt: "now",
+          score: 0,
+          user: this.user,
+          replies: [],
+        }
+        const post = this.createPost(comment);
+        this.prepend(post);
       }
-      const post = this.createPost(comment);
-      this.prepend(post);
     });
   }
 

@@ -23,6 +23,7 @@ class AppComment extends HTMLDivElement {
   deleteModalElement?: AppModalInterface;
   editFormElement?: HTMLFormElement;
   replyFormElement?: AppFormInterface;
+  cancelButtonElement?: HTMLButtonElement;
   updateButtonElement?: HTMLButtonElement;
 
   constructor() {
@@ -39,6 +40,7 @@ class AppComment extends HTMLDivElement {
     this.handleEditButton = this.handleEditButton.bind(this);
     this.handleReplyButton = this.handleReplyButton.bind(this);
     this.handleUpdateButton = this.handleUpdateButton.bind(this);
+    this.handleCancelButton = this.handleCancelButton.bind(this);
   }
 
   get user() {
@@ -91,10 +93,12 @@ class AppComment extends HTMLDivElement {
     this.deleteButtonElement?.removeEventListener("click", this.handleDeleteButton);
     this.editButtonElement?.removeEventListener("click", this.handleEditButton);
     this.replyButtonElement?.removeEventListener("click", this.handleReplyButton);
-    this.updateButtonElement?.addEventListener("click", this.handleCommentEdit);
+    this.updateButtonElement?.removeEventListener("click", this.handleCommentEdit);
+    this.cancelButtonElement?.removeEventListener("click", this.handleCancelButton);
   }
 
   handleReplyingToText() {
+    console.log(this.comment.replyingTo);
     if (this.comment.replyingTo) {
       const replyingToText = this.createReplyingToText();
       this.contentElement.prepend(replyingToText);
@@ -132,6 +136,11 @@ class AppComment extends HTMLDivElement {
     this.after(replyFormElement);
   }
 
+  handleCancelButton() {
+    this.editFormElement?.replaceWith(this.contentElement);
+    this.editButtonElement?.enable();
+  }
+
   handleUpdateButton() {
     this.replyFormElement?.replaceWith(this.contentElement);
   }
@@ -163,17 +172,25 @@ class AppComment extends HTMLDivElement {
       this.editFormElement = document.createElement("form");
       const labelElement = document.createElement("label");
       const inputElement = document.createElement("textarea");
+      const buttonGroupElement = document.createElement("div");
+      this.cancelButtonElement = document.createElement("button");
       this.updateButtonElement = document.createElement("button");
       this.editFormElement.classList.add("form", "form--comment");
       labelElement.classList.add("form__label");
       inputElement.classList.add("form__input");
+      buttonGroupElement.classList.add("form__button-row");
+      this.cancelButtonElement.classList.add("form__button", "form__button--cancel");
       this.updateButtonElement.classList.add("form__button", "form__button--confirm");
       inputElement.setAttribute("name", "comment");
-      inputElement.value = `@${this.comment.replyingTo} ${this.comment.content}`;
+      const replyingToText = this.comment.replyingTo ? `@${this.comment.replyingTo} ` : "";
+      inputElement.value = replyingToText + this.comment.content;
+      this.cancelButtonElement.textContent = "cancel";
       this.updateButtonElement.textContent = "update";
-      this.updateButtonElement.setAttribute("type", "submit");
-      this.editFormElement.append(labelElement, inputElement, this.updateButtonElement);
-      this.editFormElement.addEventListener("submit", this.handleCommentEdit);
+      this.cancelButtonElement.setAttribute("type", "button");
+      this.updateButtonElement.setAttribute("type", "button");
+      buttonGroupElement.append(this.cancelButtonElement, this.updateButtonElement);
+      this.editFormElement.append(labelElement, inputElement, buttonGroupElement);
+      this.cancelButtonElement.addEventListener("click", this.handleCancelButton);
       return this.editFormElement;
     } else {
       return this.editFormElement;
